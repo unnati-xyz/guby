@@ -2,12 +2,7 @@ FROM python:3.7-alpine
 WORKDIR /code
 RUN apk add --no-cache gcc musl-dev linux-headers postgresql-dev
 
-COPY requirements.txt requirements.txt
-COPY guby/ /code/guby
-COPY requirements.txt .
-COPY manage.py .
-COPY guby_initialize.sh /code/
-COPY create_superuser.py /code/
+COPY . .
 RUN chmod +x /code/guby_initialize.sh
 RUN chmod +x /code/create_superuser.py
 RUN pip install -r requirements.txt

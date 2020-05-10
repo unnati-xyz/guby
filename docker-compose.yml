@@ -8,6 +8,8 @@ services:
       - POSTGRES_USER=guby_admin
       - POSTGRES_PASSWORD=abcd1234
       - POSTGRES_DB=guby
+    volumes:
+      - /Volumes/guby/postgres_data:/var/lib/postgresql/data
   web:
     build: .
     ports:

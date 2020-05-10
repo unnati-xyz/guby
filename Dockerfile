@@ -17,4 +17,5 @@ ENV DJANGO_DB_NAME=guby
 ENV DJANGO_SU_NAME=guby_admin
 ENV DJANGO_SU_EMAIL=admin@my.company
 ENV DJANGO_SU_PASSWORD=abcd1234
+ENV DJANGO_SETTINGS_MODULE=guby.settings
 ENTRYPOINT ["/code/guby_initialize.sh"]

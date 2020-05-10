@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+import django
+django.setup()
 
 from django.contrib.auth.models import User
 import os

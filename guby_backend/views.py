@@ -1,8 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.shortcuts import render
-from roles.models import Roles
+from guby_backend.models import Roles
 
 
 def get_roles(request):
@@ -17,4 +16,6 @@ def get_rolename(request, id):
         "role_name" : role_name
     }
 
+def speaker_index(request):
+    return render(request, 'app/speakers.html', {})
 

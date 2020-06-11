@@ -19,3 +19,11 @@ def get_rolename(request, id):
 def speaker_index(request):
     return render(request, 'app/speakers.html', {})
 
+def speaker_add(request):
+    return render(request, 'app/speaker_add.html', {})
+
+def event_add(request):
+    return render(request, 'app/event_add.html', {})
+
+def meetup_add(request):
+    return render(request, 'app/meetup_add.html', {})

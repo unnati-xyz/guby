@@ -22,8 +22,20 @@ def speaker_index(request):
 def speaker_add(request):
     return render(request, 'app/speaker_add.html', {})
 
-def event_add(request):
-    return render(request, 'app/event_add.html', {})
+def meetup_index(request):
+    return render(request, 'app/meetups.html', {})
+
+def meetup_desc(request):
+    return render(request, 'app/meetup_desc.html', {})
 
 def meetup_add(request):
     return render(request, 'app/meetup_add.html', {})
+
+def meetup_edit(request):
+    return render(request, 'app/meetup_edit.html', {})
+
+def event_index(request):
+    return render(request, 'app/meetups/events.html', {})
+
+def event_add(request):
+    return render(request, 'app/event_add.html', {})

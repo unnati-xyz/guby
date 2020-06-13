@@ -1,5 +1,6 @@
 #!/bin/sh
-set -e
+
+set -euo pipefail
 
 # Get host:port from parameters list
 host="db"
@@ -15,10 +16,10 @@ done
 echo "Postgres is up - executing command"
 
 echo "###########----##########";
-echo $INITIALIZE_DB
-echo $INITIALIZE_APP_DB
+echo "$INITIALIZE_DB"
+echo "$INITIALIZE_APP_DB"
 echo "###########----##########";
-if [ $INITIALIZE_DB == true ]
+if [ "$INITIALIZE_DB" == true ]
 then
     echo "Initializing database for guby"
     python manage.py makemigrations 
@@ -26,7 +27,7 @@ then
     python create_superuser.py 
 fi
 
-if [ $INITIALIZE_APP_DB == true ]
+if [ "$INITIALIZE_APP_DB" == "true" ]
 then 
     echo "Initializing application database for guby"
     python manage.py makemigrations guby_backend 

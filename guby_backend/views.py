@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-from guby_backend.models import Roles
+import guby_backend.models as models
+from .forms import MeetupAddForm
 
 
 def get_roles(request):
@@ -29,7 +30,22 @@ def meetup_desc(request):
     return render(request, 'app/meetup_desc.html', {})
 
 def meetup_add(request):
-    return render(request, 'app/meetup_add.html', {})
+    if request.method == 'GET':
+        form = MeetupAddForm()
+    if request.method == 'POST':
+        form = MeetupAddForm(request.POST)
+        if form.is_valid():
+            print("HALLELUJAH")
+            print(form.cleaned_data)
+            meetup_model = models.Meetup(name=form.cleaned_data['name'],
+                                         description=form.cleaned_data['description'],
+                                         co_organizer_emails=form.cleaned_data['coorganize_email_id'])
+            print(meetup_model.clean_fields())
+            meetup_model.save()
+
+        
+    
+    return render(request, 'app/meetup_add.html', {'form':form})
 
 def meetup_edit(request):
     return render(request, 'app/meetup_edit.html', {})

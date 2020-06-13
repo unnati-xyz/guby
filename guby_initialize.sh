@@ -9,7 +9,7 @@ then
     python create_superuser.py 
 fi
 
-if [ "$INITIALIZE_APP_DB" == "true" ]
+if [ $INITIALIZE_APP_DB == "true" ]
 then 
     echo "Initializing application database for guby"
     python manage.py makemigrations guby_backend 

@@ -1,4 +1,9 @@
 from django.shortcuts import render
+from django.contrib import messages
+import logging
+import traceback
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 import guby_backend.models as models
@@ -34,16 +39,17 @@ def meetup_add(request):
         form = MeetupAddForm()
     if request.method == 'POST':
         form = MeetupAddForm(request.POST)
-        if form.is_valid():
-            print("HALLELUJAH")
-            print(form.cleaned_data)
-            meetup_model = models.Meetup(name=form.cleaned_data['name'],
-                                         description=form.cleaned_data['description'],
-                                         co_organizer_emails=form.cleaned_data['coorganize_email_id'])
-            print(meetup_model.clean_fields())
-            meetup_model.save()
+        try:
+            if form.is_valid():
+                meetup_model = models.Meetup(name=form.cleaned_data['name'],
+                                            description=form.cleaned_data['description'],
+                                            co_organizer_emails=form.cleaned_data['coorganize_email_id'])
+                meetup_model.save()
+                messages.success(request, 'Meetup successfully created')
+        except Exception as e:
+            logger.exception(e, exc_info=True)
+            messages.error(request, 'Meeting could not be created, {}'.format(e))
 
-        
     
     return render(request, 'app/meetup_add.html', {'form':form})
 

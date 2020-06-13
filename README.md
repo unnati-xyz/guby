@@ -15,6 +15,7 @@ In order to run the app, you need to do the following:
 ```
 git clone git@github.com:unnati-xyz/guby.git
 cd guby
+mkdir postgres_data
 docker-compose build && docker-compose up
 ```
 

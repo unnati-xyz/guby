@@ -12,9 +12,10 @@ Guby app currently is a django application with postgres DB as the database.
 
 In order to run the app, you need to do the following:
 
-```
+```shell
 git clone git@github.com:unnati-xyz/guby.git
 cd guby
+cp .env.sample .env # change .env as per your liking
 mkdir postgres_data
 docker-compose build && docker-compose up
 ```

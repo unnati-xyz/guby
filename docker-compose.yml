@@ -19,5 +19,4 @@ services:
     env_file:
       - .env_file
     volumes:
-      - .:/code
-    
+      - ./:/code

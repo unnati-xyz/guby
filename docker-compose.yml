@@ -4,6 +4,7 @@ services:
     image: "postgres:alpine"
     ports:
        - "5432:5432"
+    env_file: .env
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
   web:
@@ -12,6 +13,7 @@ services:
       - "5000:5000"
     depends_on: 
       - db
+    env_file: .env
     environment: 
        GUBY_PASSWORD : 'abcd1234'
     volumes:

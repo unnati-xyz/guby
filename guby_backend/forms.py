@@ -24,3 +24,13 @@ class EventAddForm(forms.Form):
     end_date = forms.DateTimeField(label='Event End Date Time')
     video_lounges = forms.CharField(max_length=500, initial='General,', label='Networking Lounges')
     chat_rooms = forms.CharField(max_length=500, initial='General,', label='Discussion Channel')
+
+class EventDeleteForm(forms.Form):
+    start_date = forms.DateTimeField(label='Event Start Date Time')
+    start_date.disabled = True
+    end_date = forms.DateTimeField(label='Event End Date Time')
+    end_date.disabled = True
+    video_lounges = forms.CharField(max_length=500, initial='General,', label='Networking Lounges')
+    video_lounges.disabled = True
+    chat_rooms = forms.CharField(max_length=500, initial='General,', label='Discussion Channel')
+    chat_rooms.disabled = True

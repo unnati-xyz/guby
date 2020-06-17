@@ -196,7 +196,7 @@
                         <h5 class="card-title">Create Meetup</h5>
                         <p class="card-text">Enter details of your super awesome meetup!</p>
 
-                        <form class="form-signin", method="POST", action="/app/meetup/add/">
+                        <form class="form-signin", method="POST", action="/app/meetups/add/">
                             {% csrf_token %}
                             {{ form }}
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign

@@ -84,6 +84,44 @@ def event_add(request):
         form = EventAddForm()
         return render(request, 'app/event_add.html', {'form': form})
 
+    elif request.method == 'POST':
+        form = EventAddForm(request.POST)
+        try:
+            if form.is_valid():
+                print(form.cleaned_data)
+                # meetup_model = models.Event(
+                #                     start_date = form.cleaned_data['start_date']
+                # )
+                # meetup_model.save()
+                return messages.success(request, 'Meetup successfully created')
+        except Exception as e:
+            logger.exception(e, exc_info=True)
+            messages.error(request, 'Meeting could not be created, {}'.format(e))
+
+def event_edit(request):
+    if request.method == 'GET':
+        form = EventAddForm(initial={'start_date': '2020-06-20 10:30', 'end_date': '2020-06-21 10:30', 'video_lounges': 'General,', 'chat_rooms': 'General,'})
+        return render(request, 'app/event_add.html', {'form': form})
+
+    if request.method == 'POST':
+        form = EventAddForm(request.POST)
+        try:
+            if form.is_valid():
+                print(form.cleaned_data)
+                # meetup_model = models.Event(
+                #                     start_date = form.cleaned_data['start_date']
+                # )
+                # meetup_model.save()
+                return messages.success(request, 'Meetup successfully created')
+        except Exception as e:
+            logger.exception(e, exc_info=True)
+            messages.error(request, 'Meeting could not be created, {}'.format(e))
+
+def event_delete(request):
+    if request.method == 'GET':
+        form = EventDeleteForm(initial={'start_date': '2020-06-20 10:30', 'end_date': '2020-06-21 10:30', 'video_lounges': 'General,', 'chat_rooms': 'General,'})
+        return render(request, 'app/event_add.html', {'form': form})
+
     if request.method == 'POST':
         form = EventAddForm(request.POST)
         try:

@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 import guby_backend.models as models
-from .forms import MeetupAddForm
+from .forms import *
 
 
 def get_roles(request):
@@ -54,10 +54,46 @@ def meetup_add(request):
     return render(request, 'app/meetup_add.html', {'form':form})
 
 def meetup_edit(request):
-    return render(request, 'app/meetup_edit.html', {})
+    if request.method == 'GET':
+        form = MeetupAddForm(initial={"name": "RubyGals", "description": "gals gals this is ruby!", "coorganize_email_id": "sha@ta.com,"})
+        return render(request, 'app/meetup_edit.html', {"form": form})
+
+    elif request.method == 'POST':
+        form = MeetupAddForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            return messages.success(request, 'Meetup successfully updated')
+
+
+def meetup_delete(request):
+    if request.method == 'GET':
+        form = MeetupDeleteForm(initial={"name": "RubyGals", "description": "gals gals this is ruby!", "coorganize_email_id": "sha@ta.com,"})
+        return render(request, 'app/meetup_delete.html', {"form": form})
+
+    elif request.method == 'POST':
+        form = MeetupDeleteForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            return messages.success(request, 'Meetup successfully deleted')
 
 def event_index(request):
     return render(request, 'app/meetups/events.html', {})
 
 def event_add(request):
-    return render(request, 'app/event_add.html', {})
+    if request.method == 'GET':
+        form = EventAddForm()
+        return render(request, 'app/event_add.html', {'form': form})
+
+    if request.method == 'POST':
+        form = EventAddForm(request.POST)
+        try:
+            if form.is_valid():
+                print(form.cleaned_data)
+                # meetup_model = models.Event(
+                #                     start_date = form.cleaned_data['start_date']
+                # )
+                # meetup_model.save()
+                return messages.success(request, 'Meetup successfully created')
+        except Exception as e:
+            logger.exception(e, exc_info=True)
+            messages.error(request, 'Meeting could not be created, {}'.format(e))

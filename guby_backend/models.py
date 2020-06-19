@@ -10,7 +10,7 @@ class Roles(models.Model):
     name = models.TextField(unique=True)
 
 class Meetup(models.Model):
-    name = models.TextField(unique=True)
+    name = models.CharField(unique=True, max_length=200)
     description = models.TextField()
     co_organizer_emails = models.TextField()
     # creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
@@ -21,12 +21,25 @@ class Event(models.Model):
     meetup = models.ForeignKey(Meetup, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    status = models.IntegerField()
+
+    STATUS_ALL = 0
+    STATUS_CREATED = 1
+    STATUS_STARTED = 2
+    STATUS_ENDED = 3
+
+    STATUS_CHOICES = [
+        (STATUS_ALL, 'ALL'),
+        (STATUS_CREATED, 'CREATED'),
+        (STATUS_STARTED, 'STARTED'),
+        (STATUS_ENDED, 'ENDED'),
+    ]
+
+    status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
 class Speaker(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=200)
     email = models.EmailField()
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)

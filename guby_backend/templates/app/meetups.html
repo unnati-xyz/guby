@@ -191,40 +191,24 @@
                 <div class="card" style="margin-top:5rem;">
                     <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
                     <div class="card-body">
-                        <h5 class="card-title">Your Meetups</h5>
+                        <h4 class="card-title">Your Meetups</h4>
                         <table class="table ">
                             <thead>
                               <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Meetup Name</th>
                                 <th scope="col">Action</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td><a href="#">9th sparrow</a></td>
-                                <td>
-                                    <a href="/app/meetups/1/edit">Edit</a>
-                                    <a href="/app/meetups/1/delete">Delete</a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td><a href="/app/meetup/1">RubyGals</a></td>
-                                <td>
-                                    <a href="/app/meetups/1/edit">Edit</a>
-                                    <a href="/app/meetups/1/delete">Delete</a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td><a href="#">PyCon</a></td>
-                                <td>
-                                    <a href="/app/meetups/1/edit">Edit</a>
-                                    <a href="/app/meetups/1/delete">Delete</a>
-                                </td>
-                              </tr>
+                              {% for meetup in meetups %}
+                                <tr>
+                                    <td><a href="#">{{ meetup.name }}</a></td>
+                                    <td>
+                                        <a href="/app/meetups/{{ meetup.id }}/edit">Edit</a>
+                                        <a href="/app/meetups/{{ meetup.id }}/delete">Delete</a>
+                                    </td>
+                                </tr>
+                              {% endfor %}
                             </tbody>
                           </table>
                     </div>

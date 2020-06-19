@@ -192,7 +192,7 @@
                         <p class="card-text">Enter details of your super awesome meetup!</p>
 
                         {% load crispy_forms_tags %}
-                        <form class="form-signin" action="/app/meetups/1/delete/" method="POST">
+                        <form class="form-signin" action="/app/meetups/{{ meetup_id }}/delete/" method="POST">
                             {% csrf_token %}
                             {{ form|crispy}}
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Delete</button>

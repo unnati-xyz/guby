@@ -1,14 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 import logging
 import traceback
 
 logger = logging.getLogger(__name__)
 
-# Create your views here.
 import guby_backend.models as models
 from .forms import *
-
 
 def get_roles(request):
     role_objects = Roles.objects.get()
@@ -29,52 +27,42 @@ def speaker_add(request):
     return render(request, 'app/speaker_add.html', {})
 
 def meetup_index(request):
-    return render(request, 'app/meetups.html', {})
+    meetups = Meetup.objects.all()
+    return render(request, 'app/meetups.html', {'meetups': meetups})
 
 def meetup_desc(request):
     return render(request, 'app/meetup_desc.html', {})
 
 def meetup_add(request):
-    if request.method == 'GET':
-        form = MeetupAddForm()
+     form = MeetupForm(request.POST or None)  
+   
+     if form.is_valid():  
+         meetup = form.save()  
+         #TODO handle errors
+         return redirect('app/meetups/')  
+
+     return render(request, 'app/meetup_add.html', {'form': form})
+
+def meetup_edit(request, meetup_id):
+    meetup = get_object_or_404(Meetup, pk=meetup_id)
+
+    form = MeetupForm(request.POST or None, instance = meetup)
+    if form.is_valid():
+        form.save()
+        #TODO handle errors
+        return redirect('/app/meetups/')
+
+    return render(request, 'app/meetup_edit.html', {"form": form, "meetup_id": meetup.id})
+
+def meetup_delete(request, meetup_id):
+    meetup = get_object_or_404(Meetup, pk=meetup_id)
+    form = MeetupDeleteForm(instance=meetup)
+
     if request.method == 'POST':
-        form = MeetupAddForm(request.POST)
-        try:
-            if form.is_valid():
-                meetup_model = models.Meetup(name=form.cleaned_data['name'],
-                                            description=form.cleaned_data['description'],
-                                            co_organizer_emails=form.cleaned_data['coorganize_email_id'])
-                meetup_model.save()
-                messages.success(request, 'Meetup successfully created')
-        except Exception as e:
-            logger.exception(e, exc_info=True)
-            messages.error(request, 'Meeting could not be created, {}'.format(e))
+        meetup.delete()
+        return redirect('app/meetups/')
 
-    
-    return render(request, 'app/meetup_add.html', {'form':form})
-
-def meetup_edit(request):
-    if request.method == 'GET':
-        form = MeetupAddForm(initial={"name": "RubyGals", "description": "gals gals this is ruby!", "coorganize_email_id": "sha@ta.com,"})
-        return render(request, 'app/meetup_edit.html', {"form": form})
-
-    elif request.method == 'POST':
-        form = MeetupAddForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data)
-            return messages.success(request, 'Meetup successfully updated')
-
-
-def meetup_delete(request):
-    if request.method == 'GET':
-        form = MeetupDeleteForm(initial={"name": "RubyGals", "description": "gals gals this is ruby!", "coorganize_email_id": "sha@ta.com,"})
-        return render(request, 'app/meetup_delete.html', {"form": form})
-
-    elif request.method == 'POST':
-        form = MeetupDeleteForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data)
-            return messages.success(request, 'Meetup successfully deleted')
+    return render(request, 'app/meetup_delete.html', {"form": form, "meetup_id": meetup.id})
 
 def event_index(request):
     return render(request, 'app/meetups/events.html', {})

@@ -1,4 +1,7 @@
 from django import forms
+from django.forms import ModelForm
+
+from .models import Meetup
 
 class UserAddForm(forms.Form):
     name = forms.CharField(label='First & Last Name', max_length=50, required=True)
@@ -6,18 +9,26 @@ class UserAddForm(forms.Form):
     password = forms.CharField(max_length=32, label="Password", widget=forms.PasswordInput)
     repeat_password = forms.CharField(max_length=32, label="Repeat Password", widget=forms.PasswordInput)
 
-class MeetupAddForm(forms.Form):
-    name = forms.CharField(label='Meetup Name', max_length=500)
-    description = forms.CharField(label='Meetup Desc', max_length=3000)
-    coorganize_email_id = forms.CharField(label='Co-organizers email id', max_length=1000)
+class MeetupForm(ModelForm):
+    class Meta:
+        model = Meetup
+        fields = ['name', 'description', 'co_organizer_emails']
 
-class MeetupDeleteForm(forms.Form):
-    name = forms.CharField(label='Meetup Name', max_length=500)
-    name.disabled = True
-    description = forms.CharField(label='Meetup Desc', max_length=3000)
-    description.disabled = True
-    coorganize_email_id = forms.CharField(label='Co-organizers email id', max_length=1000)
-    coorganize_email_id.disabled = True
+class MeetupDeleteForm(ModelForm):
+    class Meta:
+        model = Meetup
+        fields = ['name', 'description', 'co_organizer_emails']
+        widgets = {
+            'name': forms.TextInput(attrs={'disabled': True}),
+            'description': forms.Textarea(attrs={'disabled': True}),
+            'co_organizer_emails': forms.Textarea(attrs={'disabled': True}),
+        }
+
+class MeetupEditForm(forms.Form):
+   id = forms.IntegerField(widget=forms.HiddenInput)
+   name = forms.CharField(label='Meetup Name', max_length=200)
+   description = forms.CharField(label='Meetup Desc', max_length=3000)
+   co_organizer_emails = forms.CharField(label='Co-organizers email id', widget=forms.Textarea)
 
 class EventAddForm(forms.Form):
     start_date = forms.DateTimeField(label='Event Start Date Time')

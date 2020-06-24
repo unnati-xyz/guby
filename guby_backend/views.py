@@ -39,7 +39,7 @@ def meetup_add(request):
      if form.is_valid():  
          meetup = form.save()  
          #TODO handle errors
-         return redirect('app/meetups/')  
+         return redirect('/app/meetups')  
 
      return render(request, 'app/meetup_add.html', {'form': form})
 
@@ -60,7 +60,7 @@ def meetup_delete(request, meetup_id):
 
     if request.method == 'POST':
         meetup.delete()
-        return redirect('app/meetups/')
+        return redirect('/app/meetups/')
 
     return render(request, 'app/meetup_delete.html', {"form": form, "meetup_id": meetup.id})
 

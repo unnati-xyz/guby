@@ -10,7 +10,8 @@ urlpatterns = [
     path('meetups/1', views.meetup_desc, name='meetup_desc'),
     path('meetups/<int:meetup_id>/edit/', views.meetup_edit, name='meetup_edit'),
     path('meetups/<int:meetup_id>/delete/', views.meetup_delete, name='meetup_delete'),
-    path('meetups/1/events/add/', views.event_add, name='event_add'),
-    path('meetups/1/events/1/edit/', views.event_edit, name='event_edit'),
-    path('meetups/1/events/1/delete/', views.event_delete, name='event_delete'),
+    path('meetups/<int:meetup_id>/events/', views.event_index, name='event_index'),
+    path('meetups/<int:meetup_id>/events/add/', views.event_add, name='event_add'),
+    path('meetups/<int:meetup_id>/events/<int:event_id>/edit/', views.event_edit, name='event_edit'),
+    path('meetups/<int:meetup_id>/events/<int:event_id>/delete/', views.event_delete, name='event_delete'),
 ]

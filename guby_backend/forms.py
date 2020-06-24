@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Meetup
+from .models import Meetup, Event
 
 class UserAddForm(forms.Form):
     name = forms.CharField(label='First & Last Name', max_length=50, required=True)
@@ -19,29 +19,26 @@ class MeetupDeleteForm(ModelForm):
         model = Meetup
         fields = ['name', 'description', 'co_organizer_emails']
         widgets = {
-            'name': forms.TextInput(attrs={'disabled': True}),
-            'description': forms.Textarea(attrs={'disabled': True}),
-            'co_organizer_emails': forms.Textarea(attrs={'disabled': True}),
+            'name': forms.TextInput(attrs={'disabledd': True}),
+            'description': forms.Textarea(attrs={'disabledd': True}),
+            'co_organizer_emails': forms.Textarea(attrs={'disabledd': True}),
         }
 
-class MeetupEditForm(forms.Form):
-   id = forms.IntegerField(widget=forms.HiddenInput)
-   name = forms.CharField(label='Meetup Name', max_length=200)
-   description = forms.CharField(label='Meetup Desc', max_length=3000)
-   co_organizer_emails = forms.CharField(label='Co-organizers email id', widget=forms.Textarea)
+class EventForm(ModelForm):
+    class Meta:
+        model = Event
+        fields = ['meetup', 'start_date', 'end_date', 'lounges', 'channels', 'status']
 
-class EventAddForm(forms.Form):
-    start_date = forms.DateTimeField(label='Event Start Date Time')
-    end_date = forms.DateTimeField(label='Event End Date Time')
-    video_lounges = forms.CharField(max_length=500, initial='General,', label='Networking Lounges')
-    chat_rooms = forms.CharField(max_length=500, initial='General,', label='Discussion Channel')
+class EventDeleteForm(ModelForm):
+    class Meta:
+        model = Event
+        fields = ['meetup', 'start_date', 'end_date', 'lounges', 'channels', 'status']
+        widgets = {
+            'meetup': forms.TextInput(attrs={'disabled': True}),
+            'start_date': forms.TextInput(attrs={'disabled': True}),
+            'end_date': forms.TextInput(attrs={'disabled': True}),
+            'lounges': forms.TextInput(attrs={'disabled': True}),
+            'channels': forms.TextInput(attrs={'disabled': True}),
+            'status': forms.TextInput(attrs={'disabled': True}),
+        }
 
-class EventDeleteForm(forms.Form):
-    start_date = forms.DateTimeField(label='Event Start Date Time')
-    start_date.disabled = True
-    end_date = forms.DateTimeField(label='Event End Date Time')
-    end_date.disabled = True
-    video_lounges = forms.CharField(max_length=500, initial='General,', label='Networking Lounges')
-    video_lounges.disabled = True
-    chat_rooms = forms.CharField(max_length=500, initial='General,', label='Discussion Channel')
-    chat_rooms.disabled = True

@@ -66,7 +66,7 @@ def meetup_delete(request, meetup_id):
 
 def event_index(request, meetup_id):
     events = Event.objects.filter(meetup=meetup_id)
-    return render(request, 'app/events.html', {'events': events})
+    return render(request, 'app/events.html', {'meetup_id': meetup_id, 'events': events})
 
 def event_add(request, meetup_id):
     form = EventForm(request.POST or None)
@@ -74,9 +74,10 @@ def event_add(request, meetup_id):
     if form.is_valid():
         model = form.save()
         #TODO handle errors
-        return redirect('/app/meetups/')
+        print(meetup_id)
+        return redirect(f'/app/meetups/{meetup_id}/events/')
 
-    return render(request, 'app/event_add.html', {'form': form})
+    return render(request, 'app/event_add.html', {'form': form, 'meetup_id': meetup_id})
 
 
 def event_edit(request, meetup_id, event_id):
@@ -87,7 +88,7 @@ def event_edit(request, meetup_id, event_id):
         form.save()
         return redirect(f'/app/meetups/{meetup_id}/events/')
 
-    return render(request, 'app/event_edit.html', {"form": form, "event": event})
+    return render(request, 'app/event_edit.html', {"form": form, "meetup_id": meetup_id, "event": event})
 
 def event_delete(request, meetup_id, event_id):
     event = get_object_or_404(Event, pk=event_id)
@@ -97,4 +98,4 @@ def event_delete(request, meetup_id, event_id):
         event.delete()
         return redirect(f'/app/meetups/{meetup_id}/events/')
 
-    return render(request, 'app/event_delete.html', {"form": form, "event": event})
+    return render(request, 'app/event_delete.html', {"form": form, "meetup_id": meetup_id, "event": event})

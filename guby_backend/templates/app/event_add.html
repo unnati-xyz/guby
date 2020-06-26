@@ -184,6 +184,13 @@
     </nav>
     <div class="container">
         <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/app/meetups">Meetups</a></li>
+                  <li class="breadcrumb-item"><a href="/app/meetups/{{ meetup_id }}/events">Events</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Add</li>
+                </ol>
+              </nav>
             <div class="col-sm-6 mx-auto">
                 <div class="card" style="margin-top:5rem;">
                     <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
@@ -192,7 +199,7 @@
                         <!-- <p class="card-text">Enter details of your super awesome meetup</p> -->
 
                         {% load crispy_forms_tags %}
-                        <form class="form-signin" method="POST" action="/app/meetups/1/events/add/">
+                        <form class="form-signin" method="POST" action="/app/meetups/{{ meetup_id }}/events/add/">
 
                             {% csrf_token %}
                             {{ form|crispy }} 

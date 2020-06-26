@@ -152,6 +152,10 @@
                 color: #777;
             }
         }
+
+        nav .breadcrumb {
+            background-color: transparent;
+        }
     </style>
 
     <title>ChennaiPy | guby.live</title>
@@ -184,15 +188,19 @@
     </nav>
     <div class="container">
         <div class="row">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="/app/meetups">Meetups</a></li>
-                  <li class="breadcrumb-item"><a href="/app/meetups/{{ meetup_id }}/events">Events</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Delete</li>
-                </ol>
-              </nav>
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/app/meetups">Meetups</a></li>
+                    <li class="breadcrumb-item"><a href="/app/meetups/{{ meetup_id }}/events">Events</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Delete</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-6 mx-auto">
-                <div class="card" style="margin-top:5rem;">
+                <div class="card">
                     <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
                     <div class="card-body">
                         <h5 class="card-title">Edit Meetup</h5>

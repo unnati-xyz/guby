@@ -20,12 +20,6 @@ def get_rolename(request, id):
         "role_name" : role_name
     }
 
-def speaker_index(request):
-    return render(request, 'app/speakers.html', {})
-
-def speaker_add(request):
-    return render(request, 'app/speaker_add.html', {})
-
 def meetup_index(request):
     meetups = Meetup.objects.all()
     return render(request, 'app/meetups.html', {'meetups': meetups})

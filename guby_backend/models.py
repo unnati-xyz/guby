@@ -1,11 +1,18 @@
 from django.db import models
 from django.contrib import admin
 from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 '''
 We can probably replace this using djano auth user group
 '''
+
+class GubyUser(AbstractUser):
+    email = models.EmailField('email_id')
+    name = models.CharField(max_length=50)
+    password = models.CharField(max_length=200)
+
 class Roles(models.Model):
     name = models.TextField(unique=True)
 
@@ -37,12 +44,5 @@ class Event(models.Model):
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     lounges = models.TextField(default="General,")
     channels = models.TextField(default="General,")
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-class Speaker(models.Model):
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

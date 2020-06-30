@@ -11,7 +11,7 @@ class GubyUserAdmin(UserAdmin):
     add_form = GubyUserCreationForm
     form = GubyUserChangeForm
     model = GubyUser
-    list_display = ['email', 'name', 'password']
+    list_display = ['email', 'name']
 
 # Register your models here.
 admin.site.register(Meetup)

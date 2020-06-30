@@ -1,11 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
 
 from . import views
 
 urlpatterns = [
+    path('users/', include('django.contrib.auth.urls')),
+    path('signup/', views.SignUpView.as_view(), name='signup'),
     path('meetups/', views.meetup_index, name='meetup_index'),
     path('meetups/add/', views.meetup_add, name='meetup_add'),
-    path('meetups/1', views.meetup_desc, name='meetup_desc'),
     path('meetups/<int:meetup_id>/edit/', views.meetup_edit, name='meetup_edit'),
     path('meetups/<int:meetup_id>/delete/', views.meetup_delete, name='meetup_delete'),
     path('meetups/<int:meetup_id>/events/', views.event_index, name='event_index'),

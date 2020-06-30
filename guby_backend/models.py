@@ -11,7 +11,6 @@ We can probably replace this using djano auth user group
 class GubyUser(AbstractUser):
     email = models.EmailField('email_id')
     name = models.CharField(max_length=50)
-    password = models.CharField(max_length=200)
 
 class Roles(models.Model):
     name = models.TextField(unique=True)

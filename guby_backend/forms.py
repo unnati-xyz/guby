@@ -9,12 +9,12 @@ User = get_user_model()
 class GubyUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ['email', 'name', 'password']
+        fields = ['username', 'email', 'name',]
 
 class GubyUserChangeForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ['email', 'name', 'password']
+        fields = ['username', 'email', 'name',]
 
 class MeetupForm(ModelForm):
     class Meta:

@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic.edit import CreateView
 from django.contrib import messages
+from django.urls import reverse_lazy
+
 import logging
 import traceback
 
@@ -7,6 +10,11 @@ logger = logging.getLogger(__name__)
 
 import guby_backend.models as models
 from .forms import *
+
+class SignUpView(CreateView):
+    form_class = GubyUserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'app/user_register.html'
 
 def get_roles(request):
     role_objects = Roles.objects.get()

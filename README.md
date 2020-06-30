@@ -1,3 +1,6 @@
+
+[![CircleCI](https://circleci.com/gh/unnati-xyz/guby.svg?style=svg)](<LINK>)
+
 # guby 🦉
 Guby.live coming soon.
 

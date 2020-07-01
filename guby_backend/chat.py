@@ -5,13 +5,12 @@ import traceback
 
 logger = logging.getLogger(__name__)
 
-proxy_dict = {
-    "http": "http://localhost:3000"
-}
-
-rocket_admin = os.environ['ADMIN_USERNAME']
-rocket_password = os.environ['ADMIN_PASSWORD']
-rocket = RocketChat(rocket_admin, rocket_password, server_url='http://localhost:3000')
+rocket_admin = os.environ['ROCKET_ADMIN_USERNAME']
+rocket_password = os.environ['ROCKET_ADMIN_PASSWORD']
+rocket_host = os.environ['ROCKET_SERVER_HOST']
+rocket_port = os.environ['ROCKET_SERVER_PORT']
+server_url = 'http://' + rocket_host + ':' + rocket_port
+rocket = RocketChat(rocket_admin, rocket_password, server_url=server_url)
 
 
 def create_channel(channel_name: str) -> dict:

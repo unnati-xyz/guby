@@ -1,3 +1,6 @@
+
+[![unnati-xyz](https://circleci.com/gh/unnati-xyz/guby.svg?style=svg)](https://app.circleci.com/pipelines/github/unnati-xyz/guby)
+
 # guby 🦉
 Guby.live coming soon.
 

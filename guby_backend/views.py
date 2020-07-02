@@ -32,9 +32,7 @@ def get_rolename(request, id):
 
 @login_required(login_url='/app/users/login/')
 def meetup_index(request):
-    print(request.user)
-    print(type(request.user))
-    meetups = Meetup.objects.all()
+    meetups = Meetup.objects.filter(creator=request.user)
     return render(request, 'app/meetups.html', {'meetups': meetups})
 
 @login_required(login_url='/app/users/login/')

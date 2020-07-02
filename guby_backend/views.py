@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import CreateView
-from django.contrib import messages
 from django.urls import reverse_lazy
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 
 import logging
 import traceback
@@ -28,23 +30,31 @@ def get_rolename(request, id):
         "role_name" : role_name
     }
 
+@login_required(login_url='/app/users/login/')
 def meetup_index(request):
+    print(request.user)
+    print(type(request.user))
     meetups = Meetup.objects.all()
     return render(request, 'app/meetups.html', {'meetups': meetups})
 
+@login_required(login_url='/app/users/login/')
 def meetup_desc(request):
     return render(request, 'app/meetup_desc.html', {})
 
+@login_required(login_url='/app/users/login/')
 def meetup_add(request):
      form = MeetupForm(request.POST or None)  
    
      if form.is_valid():  
-         meetup = form.save()  
+         meetup = form.save(commit=False)  
+         meetup.creator = request.user
+         meetup.save()
          #TODO handle errors
          return redirect('/app/meetups')  
 
      return render(request, 'app/meetup_add.html', {'form': form})
 
+@login_required(login_url='/app/users/login/')
 def meetup_edit(request, meetup_id):
     meetup = get_object_or_404(Meetup, pk=meetup_id)
 
@@ -56,6 +66,7 @@ def meetup_edit(request, meetup_id):
 
     return render(request, 'app/meetup_edit.html', {"form": form, "meetup_id": meetup.id})
 
+@login_required(login_url='/app/users/login/')
 def meetup_delete(request, meetup_id):
     meetup = get_object_or_404(Meetup, pk=meetup_id)
     form = MeetupDeleteForm(instance=meetup)
@@ -66,10 +77,12 @@ def meetup_delete(request, meetup_id):
 
     return render(request, 'app/meetup_delete.html', {"form": form, "meetup_id": meetup.id})
 
+@login_required(login_url='/app/users/login/')
 def event_index(request, meetup_id):
     events = Event.objects.filter(meetup=meetup_id)
     return render(request, 'app/events.html', {'meetup_id': meetup_id, 'events': events})
 
+@login_required(login_url='/app/users/login/')
 def event_add(request, meetup_id):
     form = EventForm(request.POST or None)
 
@@ -81,7 +94,7 @@ def event_add(request, meetup_id):
 
     return render(request, 'app/event_add.html', {'form': form, 'meetup_id': meetup_id})
 
-
+@login_required(login_url='/app/users/login/')
 def event_edit(request, meetup_id, event_id):
     event = get_object_or_404(Event, pk=event_id)
     form = EventForm(request.POST or None, instance = event)
@@ -92,6 +105,7 @@ def event_edit(request, meetup_id, event_id):
 
     return render(request, 'app/event_edit.html', {"form": form, "meetup_id": meetup_id, "event": event})
 
+@login_required(login_url='/app/users/login/')
 def event_delete(request, meetup_id, event_id):
     event = get_object_or_404(Event, pk=event_id)
     form = EventDeleteForm(instance=event)

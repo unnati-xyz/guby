@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import Http404
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -77,8 +78,13 @@ def meetup_delete(request, meetup_id):
 
 @login_required(login_url='/app/users/login/')
 def event_index(request, meetup_id):
-    events = Event.objects.filter(meetup=meetup_id)
-    return render(request, 'app/events.html', {'meetup_id': meetup_id, 'events': events})
+    # check if login user is owner of meetupid
+    meetup = Meetup.objects.get(id=meetup_id)
+    if meetup.creator.id == request.user.id:
+        events = Event.objects.filter(meetup=meetup_id)
+        return render(request, 'app/events.html', {'meetup_id': meetup_id, 'events': events})
+    else:
+        raise Http404("Event does not exist") 
 
 @login_required(login_url='/app/users/login/')
 def event_add(request, meetup_id):

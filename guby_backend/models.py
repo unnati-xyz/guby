@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib import admin
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
@@ -17,13 +18,15 @@ class Roles(models.Model):
 
 class Meetup(models.Model):
     name = models.CharField(unique=True, max_length=200)
-    description = models.TextField()
-    co_organizer_emails = models.TextField()
-    # creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
+    description = models.CharField(max_length=1500)
+    co_organizer_emails = models.CharField(max_length=300)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
 class Event(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    description = models.CharField(max_length=1500, null=True)
     meetup = models.ForeignKey(Meetup, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()

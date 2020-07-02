@@ -37,12 +37,11 @@ services:
       - MONGO_URL=mongodb://mongo:27017/rocketchat
       - MONGO_OPLOG_URL=mongodb://mongo:27017/local
       - MAIL_URL=smtp://smtp.email
-      - OVERWRITE_SETTING_Show_Setup_Wizard=completed
       - ADMIN_USERNAME=guby
       - ADMIN_PASSWORD=guby123
       - ADMIN_EMAIL=guby@guby.live
-#       - HTTP_PROXY=http://proxy.domain.com
-#       - HTTPS_PROXY=http://proxy.domain.com
+      - OVERWRITE_SETTING_Show_Setup_Wizard=completed
+#    env_file: .env
     depends_on:
       - mongo
     ports:

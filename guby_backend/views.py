@@ -31,16 +31,16 @@ def get_rolename(request, id):
         "role_name" : role_name
     }
 
-@login_required(login_url='/app/users/login/')
+@login_required()
 def meetup_index(request):
     meetups = Meetup.objects.filter(creator=request.user)
     return render(request, 'app/meetups.html', {'meetups': meetups})
 
-@login_required(login_url='/app/users/login/')
+@login_required()
 def meetup_desc(request):
     return render(request, 'app/meetup_desc.html', {})
 
-@login_required(login_url='/app/users/login/')
+@login_required()
 def meetup_add(request):
      form = MeetupForm(request.POST or None)  
    
@@ -53,7 +53,7 @@ def meetup_add(request):
 
      return render(request, 'app/meetup_add.html', {'form': form})
 
-@login_required(login_url='/app/users/login/')
+@login_required()
 def meetup_edit(request, meetup_id):
     meetup = get_object_or_404(Meetup, pk=meetup_id)
 
@@ -65,7 +65,7 @@ def meetup_edit(request, meetup_id):
 
     return render(request, 'app/meetup_edit.html', {"form": form, "meetup_id": meetup.id})
 
-@login_required(login_url='/app/users/login/')
+@login_required()
 def meetup_delete(request, meetup_id):
     meetup = get_object_or_404(Meetup, pk=meetup_id)
     form = MeetupDeleteForm(instance=meetup)
@@ -76,7 +76,7 @@ def meetup_delete(request, meetup_id):
 
     return render(request, 'app/meetup_delete.html', {"form": form, "meetup_id": meetup.id})
 
-@login_required(login_url='/app/users/login/')
+@login_required()
 def event_index(request, meetup_id):
     # check if login user is owner of meetupid
     meetup = Meetup.objects.get(id=meetup_id)
@@ -86,7 +86,7 @@ def event_index(request, meetup_id):
     else:
         raise Http404("Event does not exist") 
 
-@login_required(login_url='/app/users/login/')
+@login_required()
 def event_add(request, meetup_id):
     form = EventForm(request.POST or None)
 
@@ -98,7 +98,7 @@ def event_add(request, meetup_id):
 
     return render(request, 'app/event_add.html', {'form': form, 'meetup_id': meetup_id})
 
-@login_required(login_url='/app/users/login/')
+@login_required()
 def event_edit(request, meetup_id, event_id):
     event = get_object_or_404(Event, pk=event_id)
     form = EventForm(request.POST or None, instance = event)
@@ -109,7 +109,7 @@ def event_edit(request, meetup_id, event_id):
 
     return render(request, 'app/event_edit.html', {"form": form, "meetup_id": meetup_id, "event": event})
 
-@login_required(login_url='/app/users/login/')
+@login_required()
 def event_delete(request, meetup_id, event_id):
     event = get_object_or_404(Event, pk=event_id)
     form = EventDeleteForm(instance=event)

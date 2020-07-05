@@ -44,7 +44,7 @@ class Event(models.Model):
     ]
 
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
-    lounges = models.TextField(default="General,")
-    channels = models.TextField(default="General,")
+    lounges = models.TextField(default="")
+    channels = models.TextField(default="")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
+from bootstrap_datepicker_plus import DatePickerInput
 
 from .models import Meetup, Event
 
@@ -37,7 +38,14 @@ class MeetupDeleteForm(ModelForm):
 class EventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['meetup', 'start_date', 'end_date', 'lounges', 'channels', 'status']
+        fields = ['name', 'start_date', 'end_date', 'lounges', 'channels', 'status']
+        widgets = {
+            'start_date' : DatePickerInput(format='%Y-%m-%d'),
+            'end_date' : DatePickerInput(format='%Y-%m-%d'),
+            'lounges' : forms.TextInput(),
+            'channels' : forms.TextInput(),
+            'name' : forms.TextInput(),
+        }
 
 class EventDeleteForm(ModelForm):
     class Meta:

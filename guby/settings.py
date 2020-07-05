@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'guby_backend',
+    'bootstrap_datepicker_plus',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -134,3 +135,6 @@ AUTH_USER_MODEL = 'guby_backend.GubyUser'
 LOGIN_REDIRECT_URL = 'meetup_index'
 LOGIN_URL = '/app/users/login/'
 
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}

@@ -132,4 +132,5 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'guby_backend.GubyUser'
 
 LOGIN_REDIRECT_URL = 'meetup_index'
+LOGIN_URL = '/app/users/login/'
 

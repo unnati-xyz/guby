@@ -10,7 +10,7 @@ We can probably replace this using djano auth user group
 '''
 
 class GubyUser(AbstractUser):
-    email = models.EmailField('email_id')
+    email = models.EmailField('email')
     name = models.CharField(max_length=50)
 
 class Roles(models.Model):

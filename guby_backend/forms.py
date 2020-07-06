@@ -38,13 +38,14 @@ class MeetupDeleteForm(ModelForm):
 class EventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'start_date', 'end_date', 'lounges', 'channels', 'status']
+        fields = ['name', 'description', 'start_date', 'end_date', 'lounges', 'channels']
         widgets = {
             'start_date' : DatePickerInput(format='%Y-%m-%d'),
             'end_date' : DatePickerInput(format='%Y-%m-%d'),
             'lounges' : forms.TextInput(),
             'channels' : forms.TextInput(),
             'name' : forms.TextInput(),
+            'description' : forms.Textarea()
         }
 
 class EventDeleteForm(ModelForm):

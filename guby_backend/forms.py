@@ -51,8 +51,10 @@ class EventForm(ModelForm):
 class EventDeleteForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['meetup', 'start_date', 'end_date', 'lounges', 'channels', 'status']
+        fields = ['name', 'description', 'start_date', 'end_date', 'lounges', 'channels']
         widgets = {
+            'name': forms.TextInput(attrs={'disabled': True}),
+            'description': forms.Textarea(attrs={'disabled': True}),
             'meetup': forms.TextInput(attrs={'disabled': True}),
             'start_date': forms.TextInput(attrs={'disabled': True}),
             'end_date': forms.TextInput(attrs={'disabled': True}),

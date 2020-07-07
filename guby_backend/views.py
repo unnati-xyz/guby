@@ -91,9 +91,12 @@ def event_add(request, meetup_id):
     form = EventForm(request.POST or None)
 
     if form.is_valid():
-        model = form.save()
+        model = form.save(commit=False)
+        meetup = Meetup.objects.get(id=meetup_id)
+        model.meetup = meetup
+        model.status = Event.STATUS_CREATED
         #TODO handle errors
-        print(meetup_id)
+        model.save()
         return redirect(f'/app/meetups/{meetup_id}/events/')
 
     return render(request, 'app/event_add.html', {'form': form, 'meetup_id': meetup_id})

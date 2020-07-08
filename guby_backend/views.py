@@ -14,6 +14,7 @@ import traceback
 logger = logging.getLogger(__name__)
 
 import guby_backend.models as models
+from guby_backend.utils import has_ownership
 from .forms import *
 
 
@@ -63,6 +64,7 @@ def meetup_add(request):
      return render(request, 'app/meetup_add.html', {'form': form})
 
 @login_required()
+@has_ownership
 def meetup_edit(request, meetup_id):
     meetup = get_object_or_404(Meetup, pk=meetup_id)
 

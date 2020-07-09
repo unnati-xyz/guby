@@ -89,6 +89,7 @@ def meetup_edit(request, meetup_id):
     return render(request, 'app/meetup_edit.html', {"form": form, "meetup_id": meetup.id})
 
 @login_required()
+@has_ownership
 def meetup_delete(request, meetup_id):
     meetup = get_object_or_404(Meetup, pk=meetup_id)
     form = MeetupDeleteForm(instance=meetup)
@@ -100,6 +101,7 @@ def meetup_delete(request, meetup_id):
     return render(request, 'app/meetup_delete.html', {"form": form, "meetup_id": meetup.id})
 
 @login_required()
+@has_ownership
 def meetup_owner_add(request, meetup_id):
    
     if request.method == 'GET':
@@ -117,6 +119,7 @@ def meetup_owner_add(request, meetup_id):
     #  return render(request, 'app/meetup_add.html', {'form': form})
 
 @login_required()
+@has_ownership
 def event_index(request, meetup_id):
     # check if login user is owner of meetupid
     meetup = Meetup.objects.get(id=meetup_id)
@@ -127,6 +130,7 @@ def event_index(request, meetup_id):
         raise Http404("Event does not exist") 
 
 @login_required()
+@has_ownership
 def event_add(request, meetup_id):
     form = EventForm(request.POST or None)
 
@@ -142,6 +146,7 @@ def event_add(request, meetup_id):
     return render(request, 'app/event_add.html', {'form': form, 'meetup_id': meetup_id})
 
 @login_required()
+@has_ownership
 def event_edit(request, meetup_id, event_id):
     event = get_object_or_404(Event, pk=event_id)
     form = EventForm(request.POST or None, instance = event)
@@ -153,6 +158,7 @@ def event_edit(request, meetup_id, event_id):
     return render(request, 'app/event_edit.html', {"form": form, "meetup_id": meetup_id, "event": event})
 
 @login_required()
+@has_ownership
 def event_delete(request, meetup_id, event_id):
     event = get_object_or_404(Event, pk=event_id)
     form = EventDeleteForm(instance=event)

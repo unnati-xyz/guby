@@ -39,7 +39,19 @@ def get_rolename(request, id):
 
 @login_required()
 def meetup_index(request):
-    meetups = Meetup.objects.filter(creator=request.user)
+
+    # get group names where the user is owner
+    group_names = request.user.groups.all()
+
+    # extract meetup id from group name
+    meetup_ids = []
+    for g in group_names:
+        if g.name.startswith('guby-meetup'):
+                meetup_ids.append(g.name.split('-')[2])
+
+    # get all meetups where user is owner, not just creator
+    meetups = Meetup.objects.filter(pk__in=meetup_ids)
+
     return render(request, 'app/meetups.html', {'meetups': meetups})
 
 @login_required()

@@ -14,7 +14,7 @@ import traceback
 logger = logging.getLogger(__name__)
 
 import guby_backend.models as models
-from guby_backend.utils import has_ownership, get_my_own_meetups
+from guby_backend.utils import has_ownership, get_own_meetup_ids
 from .forms import *
 
 
@@ -39,7 +39,6 @@ def get_rolename(request, id):
 
 @login_required()
 def meetup_index(request):
-
     meetup_ids = get_own_meetup_ids(request.user)
     # get all meetups where user is owner, not just creator
     meetups = Meetup.objects.filter(pk__in=meetup_ids)
@@ -98,10 +97,9 @@ def meetup_owner_index(request, meetup_id):
    
     if request.method == 'GET':
         users = User.objects.filter(groups__name=f'meetup-owner#{meetup_id}')
-
         # no group should become orphan by deleting all owners
         if len(users) < 2:
-            users = None
+            users = []
 
         return render(request, 'app/meetup_owner_index.html', {'meetup_id': meetup_id, 'owners': users})
     

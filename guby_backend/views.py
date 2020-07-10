@@ -46,8 +46,8 @@ def meetup_index(request):
     # extract meetup id from group name
     meetup_ids = []
     for g in group_names:
-        if g.name.startswith('guby-meetup'):
-                meetup_ids.append(g.name.split('-')[2])
+        if g.name.startswith('guby-meetup-owner'):
+                meetup_ids.append(g.name.split('#')[1])
 
     # get all meetups where user is owner, not just creator
     meetups = Meetup.objects.filter(pk__in=meetup_ids)
@@ -68,7 +68,7 @@ def meetup_add(request):
          meetup.save()
 
          # create group to handle meetup ownership
-         owner_group, created = Group.objects.get_or_create(name=f'guby-meetup-{meetup.id}-owners')
+         owner_group, created = Group.objects.get_or_create(name=f'guby-meetup-owner#{meetup.id}')
          owner_group.user_set.add(request.user)
          #TODO handle errors
          return redirect('/app/meetups')  
@@ -102,6 +102,19 @@ def meetup_delete(request, meetup_id):
 
 @login_required()
 @has_ownership
+def meetup_owner_index(request, meetup_id):
+   
+    if request.method == 'GET':
+        users = User.objects.filter(groups__name=f'guby-meetup-owner#{meetup_id}')
+
+        # no group should become orphan by deleting all owners
+        if len(users) < 2:
+            users = None
+
+        return render(request, 'app/meetup_owner_index.html', {'meetup_id': meetup_id, 'owners': users})
+    
+@login_required()
+@has_ownership
 def meetup_owner_add(request, meetup_id):
    
     if request.method == 'GET':
@@ -111,12 +124,21 @@ def meetup_owner_add(request, meetup_id):
     if request.method == 'POST':
         userid = request.POST['meetup-userid']
         new_user = User.objects.get(username=userid)
-        owner_group, created = Group.objects.get_or_create(name=f'guby-meetup-{meetup_id}-owners')
+        owner_group, created = Group.objects.get_or_create(name=f'guby-meetup-owner#{meetup_id}')
         owner_group.user_set.add(new_user)
     #     #TODO handle errors
         return redirect(f'/app/meetups/{meetup_id}/owner/')  
 
-    #  return render(request, 'app/meetup_add.html', {'form': form})
+@login_required()
+@has_ownership
+def meetup_owner_delete(request, meetup_id, user_id):
+   
+    if request.method == 'GET':
+        owner = User.objects.get(id=user_id)
+        owner_group, created = Group.objects.get_or_create(name=f'guby-meetup-owner#{meetup_id}')
+        owner_group.user_set.remove(owner)
+    #     #TODO handle errors
+        return redirect(f'/app/meetups/{meetup_id}/owner/')  
 
 @login_required()
 @has_ownership

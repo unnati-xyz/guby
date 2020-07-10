@@ -192,7 +192,7 @@
                         <!-- <p class="card-text">Enter details of your super awesome meetup</p> -->
 
                         {% load crispy_forms_tags %}
-                        <form class="form-signin" action="/app/meetups/{{ meetup_id }}/owner/" method="POST">
+                        <form class="form-signin" action="/app/meetups/{{ meetup_id }}/owner/add" method="POST">
                             {% csrf_token %}
 
                                 <input type="text" id="inputMeetupOwner" class="form-control" placeholder="Add meetup owner"

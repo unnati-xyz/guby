@@ -6,7 +6,7 @@ def has_ownership(func):
     @wraps(func)
     def check_owner_wrapper(request, *args, **kwargs):
         meetup_id = kwargs['meetup_id']
-        if request.user.is_authenticated and request.user.groups.filter(name=f'guby-meetup-{meetup_id}-owners').exists():
+        if request.user.is_authenticated and request.user.groups.filter(name=f'guby-meetup-owner#{meetup_id}').exists():
 
             return func(request, *args, **kwargs)
 

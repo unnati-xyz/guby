@@ -46,7 +46,7 @@ def meetup_index(request):
     # extract meetup id from group name
     meetup_ids = []
     for g in group_names:
-        if g.name.startswith('guby-meetup-owner'):
+        if g.name.startswith('meetup-owner'):
                 meetup_ids.append(g.name.split('#')[1])
 
     # get all meetups where user is owner, not just creator
@@ -68,7 +68,7 @@ def meetup_add(request):
          meetup.save()
 
          # create group to handle meetup ownership
-         owner_group, created = Group.objects.get_or_create(name=f'guby-meetup-owner#{meetup.id}')
+         owner_group, created = Group.objects.get_or_create(name=f'meetup-owner#{meetup.id}')
          owner_group.user_set.add(request.user)
          #TODO handle errors
          return redirect('/app/meetups')  
@@ -105,7 +105,7 @@ def meetup_delete(request, meetup_id):
 def meetup_owner_index(request, meetup_id):
    
     if request.method == 'GET':
-        users = User.objects.filter(groups__name=f'guby-meetup-owner#{meetup_id}')
+        users = User.objects.filter(groups__name=f'meetup-owner#{meetup_id}')
 
         # no group should become orphan by deleting all owners
         if len(users) < 2:
@@ -124,7 +124,7 @@ def meetup_owner_add(request, meetup_id):
     if request.method == 'POST':
         userid = request.POST['meetup-userid']
         new_user = User.objects.get(username=userid)
-        owner_group, created = Group.objects.get_or_create(name=f'guby-meetup-owner#{meetup_id}')
+        owner_group, created = Group.objects.get_or_create(name=f'meetup-owner#{meetup_id}')
         owner_group.user_set.add(new_user)
     #     #TODO handle errors
         return redirect(f'/app/meetups/{meetup_id}/owner/')  
@@ -135,7 +135,7 @@ def meetup_owner_delete(request, meetup_id, user_id):
    
     if request.method == 'GET':
         owner = User.objects.get(id=user_id)
-        owner_group, created = Group.objects.get_or_create(name=f'guby-meetup-owner#{meetup_id}')
+        owner_group, created = Group.objects.get_or_create(name=f'meetup-owner#{meetup_id}')
         owner_group.user_set.remove(owner)
     #     #TODO handle errors
         return redirect(f'/app/meetups/{meetup_id}/owner/')  

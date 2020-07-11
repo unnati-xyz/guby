@@ -153,9 +153,6 @@
             }
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <title>ChennaiPy | guby.live</title>
 </head>
@@ -191,34 +188,24 @@
                 <div class="card" style="margin-top:5rem;">
                     <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-9">
-                                <h4 class="card-title">Your Meetups</h4>
-                            </div>
-                            <div class="col-sm-3">
-                                <a class="btn btn-primary" href="/app/meetups/add">Add</a>
-                            </div>
-                        </div>
-                        <table class="table ">
-                            <thead>
-                              <tr>
-                                <th scope="col">Meetup Name</th>
-                                <th scope="col">Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {% for meetup in meetups %}
-                                <tr>
-                                    <td><a href="/app/meetups/{{ meetup.id }}/events">{{ meetup.name }}</a></td>
-                                    <td>
-                                        <a href="/app/meetups/{{ meetup.id }}/edit">Edit</a>
-                                        <a href="/app/meetups/{{ meetup.id }}/delete">Delete</a>
-                                        <a href="/app/meetups/{{ meetup.id }}/owner/">Manage Owners</a>
-                                    </td>
-                                </tr>
-                              {% endfor %}
-                            </tbody>
-                          </table>
+                        <h5 class="card-title">Add Speakers</h5>
+                        <!-- <p class="card-text">Enter details of your super awesome meetup</p> -->
+
+                        {% load crispy_forms_tags %}
+                        <form class="form-signin" action="/app/meetups/{{ meetup_id }}/owner/add" method="POST">
+                            {% csrf_token %}
+
+                                <input type="text" id="inputMeetupOwner" class="form-control" placeholder="Add meetup owner"
+                                    required value="" name="meetup-userid"  >
+                                <label for="meetup-userid">Add meetup owner username</label>
+
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Add Owner</button>
+                            <!-- <hr class="my-4"> -->
+                            <!-- <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button> -->
+                            <!-- <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button> -->
+                        </form>
+
+
                     </div>
                 </div>
 
@@ -226,32 +213,5 @@
         </div>
     </div>
 </body>
-<!-- <script>
-    $(document).ready(function () {
-    var counter = 0;
-
-    $("#addrow").on("click", function () {
-        var newRow = $("<tr>");
-        var cols = "";
-
-        cols += '<td><input type="text" class="form-control" name="name' + counter + '"/></td>';
-        cols += '<td><input type="text" class="form-control" name="mail' + counter + '"/></td>';
-
-        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
-        newRow.append(cols);
-        $("table.order-list").append(newRow);
-        counter++;
-    });
-
-
-
-    $("table.order-list").on("click", ".ibtnDel", function (event) {
-        $(this).closest("tr").remove();       
-        counter -= 1
-    });
-
-
-});
-</script> -->
 
 </html>

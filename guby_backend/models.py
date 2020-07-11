@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
 '''
 We can probably replace this using djano auth user group
 '''

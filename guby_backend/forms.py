@@ -20,10 +20,8 @@ class GubyUserChangeForm(UserCreationForm):
 class MeetupForm(ModelForm):
     class Meta:
         model = Meetup
-        fields = ['name', 'description', 'co_organizer_emails']
-        widgets = {
-           'co_organizer_emails': forms.Textarea(attrs={'disabled': False,})
-        }
+        fields = ['name', 'description',]
+        widgets = {}
 
 class MeetupDeleteForm(ModelForm):
     class Meta:
@@ -32,18 +30,17 @@ class MeetupDeleteForm(ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'disabled': True}),
             'description': forms.Textarea(attrs={'disabled': True}),
-            'co_organizer_emails': forms.Textarea(attrs={'disabled': True}),
         }
 
 class EventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'description', 'start_date', 'end_date', 'lounges', 'channels']
+        fields = ['name', 'description', 'start_date', 'end_date', 'lounge', 'channel']
         widgets = {
             'start_date' : DatePickerInput(format='%Y-%m-%d'),
             'end_date' : DatePickerInput(format='%Y-%m-%d'),
-            'lounges' : forms.TextInput(),
-            'channels' : forms.TextInput(),
+            'lounge' : forms.TextInput(attrs={'disabled': True}),
+            'channel' : forms.TextInput(attrs={'disabled': True}),
             'name' : forms.TextInput(),
             'description' : forms.Textarea()
         }

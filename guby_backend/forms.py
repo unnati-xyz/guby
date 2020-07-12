@@ -26,7 +26,7 @@ class MeetupForm(ModelForm):
 class MeetupDeleteForm(ModelForm):
     class Meta:
         model = Meetup
-        fields = ['name', 'description', 'co_organizer_emails']
+        fields = ['name', 'description',]
         widgets = {
             'name': forms.TextInput(attrs={'disabled': True}),
             'description': forms.Textarea(attrs={'disabled': True}),
@@ -48,15 +48,15 @@ class EventForm(ModelForm):
 class EventDeleteForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'description', 'start_date', 'end_date', 'lounges', 'channels']
+        fields = ['name', 'description', 'start_date', 'end_date', 'lounge', 'channel']
         widgets = {
             'name': forms.TextInput(attrs={'disabled': True}),
             'description': forms.Textarea(attrs={'disabled': True}),
             'meetup': forms.TextInput(attrs={'disabled': True}),
             'start_date': forms.TextInput(attrs={'disabled': True}),
             'end_date': forms.TextInput(attrs={'disabled': True}),
-            'lounges': forms.TextInput(attrs={'disabled': True}),
-            'channels': forms.TextInput(attrs={'disabled': True}),
+            'lounge': forms.TextInput(attrs={'disabled': True}),
+            'channel': forms.TextInput(attrs={'disabled': True}),
             'status': forms.TextInput(attrs={'disabled': True}),
         }
 

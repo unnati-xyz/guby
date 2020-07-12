@@ -1,2 +1,4 @@
 venv
 Dockerfile
+/data/db
+/postgres_data

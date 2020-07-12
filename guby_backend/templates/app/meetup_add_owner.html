@@ -28,35 +28,46 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 mx-auto">
-                <div class="card" style="margin-top:5rem;">
-                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                    <div class="card-body">
-                        <h5 class="card-title">Add Speakers</h5>
-                        <!-- <p class="card-text">Enter details of your super awesome meetup</p> -->
 
-                        {% load crispy_forms_tags %}
-                        <form class="form-signin" action="/app/meetups/{{ meetup_id }}/owner/add" method="POST">
-                            {% csrf_token %}
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="card">
+            <div class="card-body">
 
-                                <input type="text" id="inputMeetupOwner" class="form-control" placeholder="Add meetup owner"
-                                    required value="" name="meetup-userid"  >
-                                <label for="meetup-userid">Add meetup owner username</label>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 pl-0">
+                  <li class="breadcrumb-item"><a href="/app/meetups">Meetups</a></li>
+                  <li class="breadcrumb-item"><a href="/app/meetups/{{ meetup_id}}/owner">Owners</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Add</li>
+                </ol>
+              </nav>
 
-                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Add Owner</button>
-                            <!-- <hr class="my-4"> -->
-                            <!-- <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button> -->
-                            <!-- <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button> -->
-                        </form>
+              <h1 class="card-title">Add Owner</h1>
 
+              <p class="card-text">
+              Note: Adding an owner will give them <b>all</b> the rights that you possess.
+              </p>
 
-                    </div>
-                </div>
+              {% load crispy_forms_tags %}
+              <form class="form-signin" action="/app/meetups/{{ meetup_id }}/owner/add" method="POST">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <label for="meetup-userid">Username</label>
+                      <input type="text" id="inputMeetupOwner" class="form-control" required name="meetup-userid" />
+                      <small class="form-text text-muted">Note: This user might already be signed up to guby.live</small>
+                  </div>
+
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Add Owner</button>
+                  <!-- <hr class="my-4"> -->
+                  <!-- <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button> -->
+                  <!-- <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button> -->
+              </form>
 
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
 {% endblock %}

@@ -1,23 +1,32 @@
 from django.db import models
 from django.contrib import admin
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 '''
 We can probably replace this using djano auth user group
 '''
+
+class GubyUser(AbstractUser):
+    email = models.EmailField('email')
+    name = models.CharField(max_length=50)
+
 class Roles(models.Model):
     name = models.TextField(unique=True)
 
 class Meetup(models.Model):
     name = models.CharField(unique=True, max_length=200)
-    description = models.TextField()
-    co_organizer_emails = models.TextField()
-    # creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
+    description = models.CharField(max_length=1500)
+    co_organizer_emails = models.CharField(max_length=300)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
 class Event(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    description = models.CharField(max_length=1500, null=True)
     meetup = models.ForeignKey(Meetup, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
@@ -35,14 +44,7 @@ class Event(models.Model):
     ]
 
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
-    lounges = models.TextField(default="General,")
-    channels = models.TextField(default="General,")
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-class Speaker(models.Model):
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    lounges = models.TextField(default="")
+    channels = models.TextField(default="")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

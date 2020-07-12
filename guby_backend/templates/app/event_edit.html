@@ -28,40 +28,39 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/app/meetups">Meetups</a></li>
-                    <li class="breadcrumb-item"><a href="/app/meetups/{{ meetup_id }}/events">Events</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6 mx-auto">
-                <div class="card">
-                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                    <div class="card-body">
-                        <h5 class="card-title">Edit Meetup</h5>
-                        <p class="card-text">Enter details of your super awesome meetup!</p>
 
-                        {% load crispy_forms_tags %}
-                        <form class="form-signin" action="/app/meetups/{{ event.meetup.id }}/events/{{ event.id }}/edit/" method="POST">
-                            {% csrf_token %}
-                            {{ form.media }}            
-                            {{ form|crispy }}
-                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Edit</button>
-                            <hr class="my-4">
-                        </form>
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="card">
+            <div class="card-body">
 
-                    </div>
-                </div>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 pl-0">
+                  <li class="breadcrumb-item"><a href="/app/meetups">Meetups</a></li>
+                  <li class="breadcrumb-item"><a href="/app/meetups/{{ meetup_id }}/events">Events</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                </ol>
+              </nav>
+
+              <h1 class="card-title">Edit Event</h1>
+
+              {% load crispy_forms_tags %}
+              <form class="form-signin" action="/app/meetups/{{ event.meetup.id }}/events/{{ event.id }}/edit/" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Edit</button>
+              </form>
 
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
+
+{% endblock %}
+
+{% block scripts %}
+{{ form.media }}            
 {% endblock %}

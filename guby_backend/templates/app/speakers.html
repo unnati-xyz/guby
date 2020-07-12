@@ -28,53 +28,47 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 mx-auto">
-                <div class="card" style="margin-top:5rem;">
-                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                    <div class="card-body">
-                        <h5 class="card-title">Currently Invited Speakers</h5>
-                        <table class="table ">
-                            <thead>
-                              <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Status</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>@mdo</td>
-                                <td>Registered</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>@fat</td>
-                                <td>Not Registered</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td>@twitter</td>
-                                <td>Not Registered</td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="5" style="text-align: left;">
-                                        <a href="/app/speakers/add" type="button" class="btn btn-lg btn-primary ">Add Speaker</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                </tr>
-                            </tfoot>
-                          </table>
-                    </div>
+
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="card">
+            <div class="card-body">
+
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 pl-0">
+                  <li class="breadcrumb-item"><a href="/app/meetups">Meetups</a></li>
+                  <li class="breadcrumb-item"><a href="#">Event</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Speakers</li>
+                </ol>
+              </nav>
+
+              <h1 class="card-title">Event Speakers</h1>
+
+              <div class="card mt-3">
+                <a href="#">
+                  <div class="card-body d-flex justify-content-center">
+                    <i data-feather="plus"></i>
+                    &nbsp;Add a speaker
+                  </div>
+                </a>
+              </div>
+
+              {# TODO {% for owner in owners %} #}
+              <div class="card mt-3">
+                <div class="card-body">
+                  <h4 class="card-title">Speaker name</h4>
+                  <h6 class="card-subtitle text-muted mb-2">Speaker Email</h6>
+                  {# TODO based on registration status show a badge here #}
+                  <a class="card-link text-danger" href="#">Remove</a>
                 </div>
+              </div>
+              {# {% endfor %} #}
 
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
 {% endblock %}

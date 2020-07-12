@@ -28,35 +28,46 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 mx-auto">
-                <div class="card" style="margin-top:5rem;">
-                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                    <div class="card-body">
-                        <h5 class="card-title">Add Speakers</h5>
-                        <!-- <p class="card-text">Enter details of your super awesome meetup</p> -->
 
-                        <form class="form-signin">
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="card">
+            <div class="card-body">
 
-                            <div class="form-label-group">
-                                <input type="text" id="inputSpeaker" class="form-control" placeholder="Speaker Email"
-                                    required value="" data-role="tagsinput" >
-                                <label for="inputSpeaker">Add speaker email IDs to send invite (comma separated)</label>
-                            </div>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 pl-0">
+                  <li class="breadcrumb-item"><a href="#">Meetups</a></li>
+                  <li class="breadcrumb-item"><a href="#">Event</a></li>
+                  <li class="breadcrumb-item"><a href="#">Owners</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Add</li>
+                </ol>
+              </nav>
 
-                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Create Event</button>
-                            <!-- <hr class="my-4"> -->
-                            <!-- <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button> -->
-                            <!-- <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button> -->
-                        </form>
+              <h1 class="card-title">Add Speaker</h1>
 
 
-                    </div>
-                </div>
+              {# TODO {% load crispy_forms_tags %} #}
+              <form class="form-signin" action="TODO" method="POST">
+                  {# TODO {% csrf_token %} #}
+                  <div class="form-group">
+                      <label for="speaker-email">Email</label>
+                      <input type="text" id="speaker-email" class="form-control" required name="speaker-email" />
+                      <small class="form-text text-muted">
+                        Guby will send an email to this ID asking them to join
+                        as the speaker. If they don't have an account on Guby,
+                        they will be asked to create one
+                      </small>
+                  </div>
+
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Add speaker</button>
+              </form>
 
             </div>
+          </div>
         </div>
+      </div>
     </div>
+
 
 {% endblock %}

@@ -28,45 +28,47 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 mx-auto">
-                <div class="card" style="margin-top:5rem;">
-                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-9">
-                                <h4 class="card-title">Your Meetups</h4>
-                            </div>
-                            <div class="col-sm-3">
-                                <a class="btn btn-primary" href="/app/meetups/add">Add</a>
-                            </div>
-                        </div>
-                        <table class="table ">
-                            <thead>
-                              <tr>
-                                <th scope="col">Meetup Name</th>
-                                <th scope="col">Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {% for meetup in meetups %}
-                                <tr>
-                                    <td><a href="/app/meetups/{{ meetup.id }}/events">{{ meetup.name }}</a></td>
-                                    <td>
-                                        <a href="/app/meetups/{{ meetup.id }}/edit">Edit</a>
-                                        <a href="/app/meetups/{{ meetup.id }}/delete">Delete</a>
-                                        <a href="/app/meetups/{{ meetup.id }}/owner/">Manage Owners</a>
-                                    </td>
-                                </tr>
-                              {% endfor %}
-                            </tbody>
-                          </table>
-                    </div>
-                </div>
 
+    <br/>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-6 mx-auto">
+          <div class="card">
+            <div class="card-body">
+              <h1>Meetups</h1>
+              <div class="card mt-3">
+                <a href="/app/meetups/add">
+                <div class="card-body d-flex justify-content-center">
+                  <i data-feather="plus"></i>
+                  &nbsp;Create your meetup
+                </div>
+                </a>
+              </div>
+              {% for meetup in meetups %}
+              <div class="card mt-3">
+                <div class="card-body">
+                  <h3 class="card-title">{{ meetup.name }}</h3>
+                  <a class="btn btn-primary btn-sm" href="/app/meetups/{{ meetup.id }}/events">Manage events</a>
+                  <div class="btn-group">
+                    <a class="btn btn-sm btn-secondary" href="/app/meetups/{{ meetup.id }}/edit">Edit</a>
+                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="/app/meetups/{{ meetup.id }}/delete">Delete</a>
+                      <a class="dropdown-item" href="/app/meetups/{{ meetup.id }}/owner/">Manage Owners</a>
+                    </div>
+                  </div>
+                  <hr/>
+                  <p class="card-text">{{ meetup.description }}</p>
+                </div>
+              </div>
+              {% endfor %}
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
 {% endblock %}

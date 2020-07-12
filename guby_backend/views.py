@@ -46,10 +46,6 @@ def meetup_index(request):
     return render(request, 'app/meetups.html', {'meetups': meetups})
 
 @login_required()
-def meetup_desc(request):
-    return render(request, 'app/meetup_desc.html', {})
-
-@login_required()
 def meetup_add(request):
      form = MeetupForm(request.POST or None)  
    

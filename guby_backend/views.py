@@ -131,11 +131,8 @@ def meetup_owner_delete(request, meetup_id, user_id):
 def event_index(request, meetup_id):
     # check if login user is owner of meetupid
     meetup = Meetup.objects.get(id=meetup_id)
-    if meetup.creator.id == request.user.id:
-        events = Event.objects.filter(meetup=meetup_id)
-        return render(request, 'app/events.html', {'meetup_id': meetup_id, 'events': events})
-    else:
-        raise Http404("Event does not exist") 
+    events = Event.objects.filter(meetup=meetup_id)
+    return render(request, 'app/events.html', {'meetup_id': meetup_id, 'events': events})
 
 @login_required()
 @has_ownership

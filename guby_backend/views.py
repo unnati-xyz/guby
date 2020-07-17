@@ -92,12 +92,12 @@ def meetup_delete(request, meetup_id):
 def meetup_owner_index(request, meetup_id):
    
     if request.method == 'GET':
-        users = User.objects.filter(groups__name=f'meetup-owner#{meetup_id}')
-        # no group should become orphan by deleting all owners
-        if len(users) < 2:
-            users = []
+        meetup = get_object_or_404(Meetup, pk=meetup_id)
 
-        return render(request, 'app/meetup_owner_index.html', {'meetup_id': meetup_id, 'owners': users})
+        users = User.objects.filter(groups__name=f'meetup-owner#{meetup_id}')
+        enable_remove = (len(users) > 1) # no group should become orphan by deleting all owners
+
+        return render(request, 'app/meetup_owner_index.html', {'meetup': meetup, 'owners': users, 'enable_remove': enable_remove})
     
 @login_required()
 @has_ownership

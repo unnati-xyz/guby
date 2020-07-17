@@ -42,10 +42,10 @@
                 </ol>
               </nav>
 
-              <h1>Events</h1>
+              <h1>{{ meetup.name }} Events</h1>
 
               <div class="card mt-3">
-                <a href="/app/meetups/{{ meetup_id }}/events/add">
+                <a href="/app/meetups/{{ meetup.id }}/events/add">
                   <div class="card-body d-flex justify-content-center">
                     <i data-feather="plus"></i>
                     &nbsp;Create an event

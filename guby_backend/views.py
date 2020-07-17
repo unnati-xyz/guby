@@ -132,7 +132,7 @@ def event_index(request, meetup_id):
     # check if login user is owner of meetupid
     meetup = Meetup.objects.get(id=meetup_id)
     events = Event.objects.filter(meetup=meetup_id)
-    return render(request, 'app/events.html', {'meetup_id': meetup_id, 'events': events})
+    return render(request, 'app/events.html', {'meetup': meetup, 'events': events})
 
 @login_required()
 @has_ownership

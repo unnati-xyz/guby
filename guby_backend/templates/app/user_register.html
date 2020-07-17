@@ -28,18 +28,17 @@
             </div>
         </div>
     </nav>
-    <div class="container">
+
+    <div class="container mt-4">
         <div class="row">
             <div class="col-sm-6 mx-auto">
-                <div class="card" style="margin-top:5rem;">
-                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Add Speakers</h5>
-                        <!-- <p class="card-text">Enter details of your super awesome meetup</p> -->
-                        <h2>Sign up</h2>
+                        <h2 class="mb-4">Sign up</h2>
+                        {% load crispy_forms_tags %}
                         <form method="post">
                             {% csrf_token %}
-                            {{ form.as_p }}
+                            {{ form|crispy }}
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
                         </form>
 

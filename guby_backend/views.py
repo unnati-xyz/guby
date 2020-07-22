@@ -14,7 +14,7 @@ import traceback
 logger = logging.getLogger(__name__)
 
 import guby_backend.models as models
-from guby_backend.utils import has_ownership, get_own_meetup_ids
+from guby_backend.utils import has_ownership, get_own_meetup_ids, create_inactive_user
 from .forms import *
 
 
@@ -173,3 +173,45 @@ def event_delete(request, meetup_id, event_id):
         return redirect(f'/app/meetups/{meetup_id}/events/')
 
     return render(request, 'app/event_delete.html', {"form": form, "meetup_id": meetup_id, "event": event})
+
+@login_required()
+@has_ownership
+def speaker_add(request, meetup_id, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+
+    if request.method == 'POST':
+        email = request.POST['speaker-email']
+        speaker_user = User.objects.filter(email=email)
+
+        # if username does not exists, create an inactive user and add them to speaker group
+        if speaker_user is None or len(speaker_user) == 0:
+            speaker_user = create_inactive_user(email)
+
+        speaker_group, created = Group.objects.get_or_create(name=f'event-speaker#{event_id}')
+        speaker_group.user_set.add(speaker_user)
+        return redirect(f'/app/meetups/{meetup_id}/events/{event_id}/speakers/')
+
+    return render(request, 'app/speaker_add.html', {"meetup_id": meetup_id, "event_id": event_id})
+
+@login_required()
+@has_ownership
+def speaker_index(request, meetup_id, event_id):
+   
+    if request.method == 'GET':
+        event = get_object_or_404(Event, pk=event_id)
+
+        users = User.objects.filter(groups__name=f'event-speaker#{event_id}')
+        enable_remove = (len(users) > 1) # no group should become orphan by deleting all owners
+
+        return render(request, 'app/speakers.html', {'meetup_id': meetup_id, 'event_id': event_id, 'speakers': users, 'enable_remove': enable_remove})
+
+@login_required()
+@has_ownership
+def speaker_delete(request, meetup_id, event_id, user_id):
+   
+    if request.method == 'GET':
+        speaker = User.objects.get(id=user_id)
+        speaker_group, created = Group.objects.get_or_create(name=f'event-speaker#{event_id}')
+        speaker_group.user_set.remove(speaker)
+    #     #TODO handle errors
+        return redirect(f'/app/meetups/{meetup_id}/events/{event_id}/speakers/')  

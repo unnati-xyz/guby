@@ -1,5 +1,6 @@
 from functools import wraps
 from django.http import HttpResponseForbidden
+from django.contrib.auth import get_user_model
 
 def has_ownership(func):
     
@@ -26,3 +27,10 @@ def get_own_meetup_ids(user):
                 meetup_ids.append(g.name.split('#')[1])
 
     return meetup_ids
+
+
+def create_inactive_user(email):
+    User = get_user_model()
+    new_user = User(email=email, name=email, is_active=False)
+    new_user.save()
+    return new_user

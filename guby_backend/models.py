@@ -9,8 +9,11 @@ We can probably replace this using djano auth user group
 '''
 
 class GubyUser(AbstractUser):
-    email = models.EmailField('email')
+    email = models.EmailField('email', db_index=True, unique=True)
+    username = models.CharField('username', unique=False, default='NOUSER', max_length=10)
     name = models.CharField(max_length=50)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name']
 
 class Roles(models.Model):
     name = models.TextField(unique=True)

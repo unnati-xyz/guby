@@ -109,7 +109,7 @@ def meetup_owner_add(request, meetup_id):
     
     if request.method == 'POST':
         userid = request.POST['meetup-userid']
-        new_user = User.objects.get(username=userid)
+        new_user = User.objects.get(email=userid)
         owner_group, created = Group.objects.get_or_create(name=f'meetup-owner#{meetup_id}')
         owner_group.user_set.add(new_user)
     #     #TODO handle errors

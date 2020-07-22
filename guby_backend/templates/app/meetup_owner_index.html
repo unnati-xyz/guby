@@ -56,7 +56,7 @@
               {% for owner in owners %}
               <div class="card mt-3">
                 <div class="card-body">
-                  <h4 class="card-title">{{ owner.username }}</h4>
+                  <h4 class="card-title">{{ owner.name }}</h4>
                   <h6 class="card-subtitle text-muted mb-2">{{ owner.email }}</h6>
                   {% if enable_remove %}
                     <a class="card-link text-danger" href="/app/meetups/{{ meetup.id }}/owner/{{ owner.id }}/delete/">Remove</a>

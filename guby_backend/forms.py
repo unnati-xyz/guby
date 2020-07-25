@@ -39,8 +39,8 @@ class EventForm(ModelForm):
         widgets = {
             'start_date' : DatePickerInput(format='%Y-%m-%d'),
             'end_date' : DatePickerInput(format='%Y-%m-%d'),
-            'lounge' : forms.TextInput(attrs={'disabled': True}),
-            'channel' : forms.TextInput(attrs={'disabled': True}),
+            'lounge' : forms.TextInput(attrs={'disabled': True, }),
+            'channel' : forms.TextInput(attrs={'disabled': True,}),
             'name' : forms.TextInput(),
             'description' : forms.Textarea()
         }

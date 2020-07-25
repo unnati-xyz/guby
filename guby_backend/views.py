@@ -11,10 +11,12 @@ from django.contrib.auth.decorators import login_required
 import logging
 import traceback
 
+
 logger = logging.getLogger(__name__)
 
 import guby_backend.models as models
 from guby_backend.utils import has_ownership, get_own_meetup_ids
+import guby_backend.chat as chat
 from .forms import *
 
 
@@ -57,7 +59,6 @@ def meetup_add(request):
          meetup = form.save(commit=False)  
          meetup.creator = request.user
          meetup.save()
-
          # create group to handle meetup ownership
          owner_group, created = Group.objects.get_or_create(name=f'meetup-owner#{meetup.id}')
          owner_group.user_set.add(request.user)
@@ -147,14 +148,17 @@ def event_add(request, meetup_id):
     form = EventForm(request.POST or None)
 
     if form.is_valid():
-        model = form.save(commit=False)
-        meetup = Meetup.objects.get(id=meetup_id)
-        model.meetup = meetup
-        model.status = Event.STATUS_CREATED
-        #TODO handle errors
-        model.save()
-        return redirect(f'/app/meetups/{meetup_id}/events/')
-
+        try:
+            meetup = Meetup.objects.get(id=meetup_id)
+            model = form.save(commit=False)
+            model.channel = model.name + '_' + meetup.name
+            channel_created = create_channel(model.channel)
+            model.meetup = meetup
+            model.status = Event.STATUS_CREATED
+            model.save()
+            return redirect(f'/app/meetups/{meetup_id}/events/')
+        except Exception as e:
+            logger.exception(exc_info=True)
     return render(request, 'app/event_add.html', {'form': form, 'meetup_id': meetup_id})
 
 @login_required()

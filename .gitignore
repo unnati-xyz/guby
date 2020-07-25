@@ -1,6 +1,8 @@
 ### Project specific ###
 
 .env
+data
+postgres_data
 
 ### Vim ###
 # Swap

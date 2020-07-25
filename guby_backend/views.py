@@ -48,10 +48,6 @@ def meetup_index(request):
     return render(request, 'app/meetups.html', {'meetups': meetups})
 
 @login_required()
-def meetup_desc(request):
-    return render(request, 'app/meetup_desc.html', {})
-
-@login_required()
 def meetup_add(request):
      form = MeetupForm(request.POST or None)  
    
@@ -97,12 +93,12 @@ def meetup_delete(request, meetup_id):
 def meetup_owner_index(request, meetup_id):
    
     if request.method == 'GET':
-        users = User.objects.filter(groups__name=f'meetup-owner#{meetup_id}')
-        # no group should become orphan by deleting all owners
-        if len(users) < 2:
-            users = []
+        meetup = get_object_or_404(Meetup, pk=meetup_id)
 
-        return render(request, 'app/meetup_owner_index.html', {'meetup_id': meetup_id, 'owners': users})
+        users = User.objects.filter(groups__name=f'meetup-owner#{meetup_id}')
+        enable_remove = (len(users) > 1) # no group should become orphan by deleting all owners
+
+        return render(request, 'app/meetup_owner_index.html', {'meetup': meetup, 'owners': users, 'enable_remove': enable_remove})
     
 @login_required()
 @has_ownership
@@ -136,11 +132,8 @@ def meetup_owner_delete(request, meetup_id, user_id):
 def event_index(request, meetup_id):
     # check if login user is owner of meetupid
     meetup = Meetup.objects.get(id=meetup_id)
-    if meetup.creator.id == request.user.id:
-        events = Event.objects.filter(meetup=meetup_id)
-        return render(request, 'app/events.html', {'meetup_id': meetup_id, 'events': events})
-    else:
-        raise Http404("Event does not exist") 
+    events = Event.objects.filter(meetup=meetup_id)
+    return render(request, 'app/events.html', {'meetup': meetup, 'events': events})
 
 @login_required()
 @has_ownership

@@ -16,7 +16,7 @@ def create_channel(channel_name: str) -> dict:
     rocket_password = os.environ['ROCKET_ADMIN_PASSWORD']
     rocket_host = os.environ['ROCKET_SERVER_HOST']
     rocket_port = os.environ['ROCKET_SERVER_PORT']
-    server_url = 'http://' + rocket_host + ':' + rocket_port
+    server_url = f'http://{rocket_host}:{rocket_port}'
     rocket = RocketChat(rocket_admin, rocket_password, server_url=server_url)
     logger.info(rocket)
     try:

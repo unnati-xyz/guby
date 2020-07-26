@@ -25,7 +25,7 @@ SECRET_KEY = '(y6ir^i-&7^1%*c765d-#-#v+_0qkxkf17f97ba_vq&r4x-e!-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['gubylive', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['gubylive', 'localhost']
 
 # CRISPY_TEMPLATE_PACK = 'uni_form'
 

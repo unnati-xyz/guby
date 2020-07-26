@@ -142,7 +142,7 @@ def event_add(request, meetup_id):
         try:
             meetup = Meetup.objects.get(id=meetup_id)
             model = form.save(commit=False)
-            channel_name = str(model.name) + '_' + str(random.randint(0, 10000))
+            channel_name = f'{str(model.name)}_{str(random.randint(0, 10000))}'
             model.channel = channel_name
             channel_created = chat.create_channel(channel_name)
             logger.info("Rocket channel created {}".format(channel_created))

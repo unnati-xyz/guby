@@ -59,4 +59,3 @@ class EventDeleteForm(ModelForm):
             'channel': forms.TextInput(attrs={'disabled': True}),
             'status': forms.TextInput(attrs={'disabled': True}),
         }
-

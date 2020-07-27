@@ -139,19 +139,16 @@ def event_index(request, meetup_id):
 def event_add(request, meetup_id):
     form = EventForm(request.POST or None)
     if form.is_valid():
-        try:
-            meetup = Meetup.objects.get(id=meetup_id)
-            model = form.save(commit=False)
-            channel_name = f'{str(model.name)}_{str(random.randint(0, 10000))}'
-            model.channel = channel_name
-            channel_created = chat.create_channel(channel_name)
-            logger.info("Rocket channel created {}".format(channel_created))
-            model.meetup = meetup
-            model.status = Event.STATUS_CREATED
-            model.save()
-            return redirect(f'/app/meetups/{meetup_id}/events/')
-        except Exception as e:
-            logger.exception(e, exc_info=True)
+        meetup = Meetup.objects.get(id=meetup_id)
+        model = form.save(commit=False)
+        channel_name = f'{str(model.name)}_{str(random.randint(0, 10000))}'
+        model.channel = channel_name
+        channel_created = chat.create_channel(channel_name)
+        logger.info("Rocket channel created {}".format(channel_created))
+        model.meetup = meetup
+        model.status = Event.STATUS_CREATED
+        model.save()
+        return redirect(f'/app/meetups/{meetup_id}/events/')
     return render(request, 'app/event_add.html', {'form': form, 'meetup_id': meetup_id})
 
 @login_required()

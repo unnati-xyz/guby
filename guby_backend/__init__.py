@@ -1,1 +1,1 @@
-# default_app_config = 'gubybackend.apps.GubybackendConfig'
+default_app_config = 'guby_backend.apps.GubyBackendConfig'

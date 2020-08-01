@@ -183,12 +183,14 @@ def speaker_add(request, meetup_id, event_id):
         email = request.POST['speaker-email']
         speaker_user = User.objects.filter(email=email)
 
-        # if username does not exists, create an inactive user and add them to speaker group
+        # if username does not exists, add a temporary link to speaker email <-> event 
         if speaker_user is None or len(speaker_user) == 0:
-            speaker_user = create_inactive_user(email)
+            inactive_speaker = models.InactiveSpeaker(event=event, speaker_email=email)
+            inactive_speaker.save()
+        else:
+            speaker_group, created = Group.objects.get_or_create(name=f'event-speaker#{event_id}')
+            speaker_group.user_set.add(speaker_user[0])
 
-        speaker_group, created = Group.objects.get_or_create(name=f'event-speaker#{event_id}')
-        speaker_group.user_set.add(speaker_user)
         return redirect(f'/app/meetups/{meetup_id}/events/{event_id}/speakers/')
 
     return render(request, 'app/speaker_add.html', {"meetup_id": meetup_id, "event_id": event_id})
@@ -200,10 +202,14 @@ def speaker_index(request, meetup_id, event_id):
     if request.method == 'GET':
         event = get_object_or_404(Event, pk=event_id)
 
-        users = User.objects.filter(groups__name=f'event-speaker#{event_id}')
-        enable_remove = (len(users) > 1) # no group should become orphan by deleting all owners
+        all_speakers = []
+        active_users = User.objects.filter(groups__name=f'event-speaker#{event_id}')
+        inactive_users = models.InactiveSpeaker.objects.filter(event=event)
 
-        return render(request, 'app/speakers.html', {'meetup_id': meetup_id, 'event_id': event_id, 'speakers': users, 'enable_remove': enable_remove})
+        all_speakers.extend(active_users)
+        all_speakers.extend([User(email=u.speaker_email) for u in inactive_users])
+
+        return render(request, 'app/speakers.html', {'meetup_id': meetup_id, 'event_id': event_id, 'speakers': all_speakers})
 
 @login_required()
 @has_ownership

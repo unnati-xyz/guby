@@ -221,3 +221,15 @@ def speaker_delete(request, meetup_id, event_id, user_id):
         speaker_group.user_set.remove(speaker)
     #     #TODO handle errors
         return redirect(f'/app/meetups/{meetup_id}/events/{event_id}/speakers/')  
+
+@login_required()
+@has_ownership
+def speaker_delete_inactive(request, meetup_id, event_id, email):
+   
+    if request.method == 'GET':
+        event = get_object_or_404(Event, pk=event_id)
+        event_speaker_mapping = models.InactiveSpeaker.objects.get(event=event, speaker_email=email)
+        event_speaker_mapping.delete()
+
+    #     #TODO handle errors
+        return redirect(f'/app/meetups/{meetup_id}/events/{event_id}/speakers/')  

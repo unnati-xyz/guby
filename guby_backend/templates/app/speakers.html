@@ -60,9 +60,7 @@
                   <h4 class="card-title">{{ speaker.name }}</h4>
                   <h6 class="card-subtitle text-muted mb-2">{{ speaker.email }}</h6>
                   <!-- {# TODO based on registration status show a badge here #} -->
-                  {% if enable_remove %}
                     <a class="card-link text-danger" href="/app/meetups/{{ meetup_id }}/events/{{ event_id }}/speakers/{{ speaker.id }}/delete/">Remove</a>
-                  {% endif %}
                 </div>
               </div>
               {% endfor %}

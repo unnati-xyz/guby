@@ -50,3 +50,10 @@ class Event(models.Model):
     channels = models.TextField(default="")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+class InactiveSpeaker(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    speaker_email = models.EmailField('email')
+
+    class Meta:
+        unique_together = ['event', 'speaker_email']

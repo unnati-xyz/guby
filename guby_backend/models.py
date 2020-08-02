@@ -8,6 +8,7 @@ from django.contrib.auth.models import AbstractUser
 We can probably replace this using djano auth user group
 '''
 
+
 class GubyUser(AbstractUser):
     email = models.EmailField('email', db_index=True, unique=True)
     username = models.CharField('username', unique=False, default='NOUSER', max_length=10)
@@ -15,16 +16,18 @@ class GubyUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
 
+
 class Roles(models.Model):
     name = models.TextField(unique=True)
+
 
 class Meetup(models.Model):
     name = models.CharField(unique=True, max_length=200)
     description = models.CharField(max_length=1500)
-    co_organizer_emails = models.CharField(max_length=300)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
 
 class Event(models.Model):
     name = models.CharField(max_length=200, null=True)
@@ -46,8 +49,8 @@ class Event(models.Model):
     ]
 
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
-    lounges = models.TextField(default="")
-    channels = models.TextField(default="")
+    lounge = models.TextField(default="", blank=True)
+    channel = models.TextField(default="", blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

@@ -22,16 +22,16 @@ echo "###########----##########";
 if [ "$INITIALIZE_DB" == true ]
 then
     echo "Initializing database for guby"
-    python manage.py makemigrations 
-    python manage.py migrate
+    yes | python manage.py makemigrations 
+    yes yes | python manage.py migrate
     python create_superuser.py 
 fi
 
 if [ "$INITIALIZE_APP_DB" == "true" ]
 then 
     echo "Initializing application database for guby"
-    python manage.py makemigrations guby_backend 
-    python manage.py migrate guby_backend 
+    yes | python manage.py makemigrations guby_backend 
+    yes yes | python manage.py migrate guby_backend 
 
 fi
 

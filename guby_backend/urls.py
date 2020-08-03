@@ -17,4 +17,8 @@ urlpatterns = [
     path('meetups/<int:meetup_id>/events/add/', views.event_add, name='event_add'),
     path('meetups/<int:meetup_id>/events/<int:event_id>/edit/', views.event_edit, name='event_edit'),
     path('meetups/<int:meetup_id>/events/<int:event_id>/delete/', views.event_delete, name='event_delete'),
+    path('meetups/<int:meetup_id>/events/<int:event_id>/speakers/', views.speaker_index, name='speaker_index'),
+    path('meetups/<int:meetup_id>/events/<int:event_id>/speakers/add/', views.speaker_add, name='speaker_add'),
+    path('meetups/<int:meetup_id>/events/<int:event_id>/speakers/<int:user_id>/delete/', views.speaker_delete, name='speaker_delete'),
+    path('meetups/<int:meetup_id>/events/<int:event_id>/speakers/<email>/delete/', views.speaker_delete_inactive, name='speaker_delete_inactive'),
 ]

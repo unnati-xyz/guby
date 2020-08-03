@@ -10,8 +10,11 @@ We can probably replace this using djano auth user group
 
 
 class GubyUser(AbstractUser):
-    email = models.EmailField('email')
+    email = models.EmailField('email', db_index=True, unique=True)
+    username = models.CharField('username', unique=False, default='NOUSER', max_length=10)
     name = models.CharField(max_length=50)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name']
 
 
 class Roles(models.Model):
@@ -50,3 +53,10 @@ class Event(models.Model):
     channel = models.TextField(default="", blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+class InactiveSpeaker(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    speaker_email = models.EmailField('email')
+
+    class Meta:
+        unique_together = ['event', 'speaker_email']

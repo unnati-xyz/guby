@@ -46,7 +46,7 @@
               <h1 class="card-title">Event Speakers</h1>
 
               <div class="card mt-3">
-                <a href="#">
+                <a href="/app/meetups/{{ meetup_id }}/events/{{ event_id }}/speakers/add/">
                   <div class="card-body d-flex justify-content-center">
                     <i data-feather="plus"></i>
                     &nbsp;Add a speaker
@@ -54,16 +54,20 @@
                 </a>
               </div>
 
-              {# TODO {% for owner in owners %} #}
+              {% for speaker in speakers %}
               <div class="card mt-3">
                 <div class="card-body">
-                  <h4 class="card-title">Speaker name</h4>
-                  <h6 class="card-subtitle text-muted mb-2">Speaker Email</h6>
-                  {# TODO based on registration status show a badge here #}
-                  <a class="card-link text-danger" href="#">Remove</a>
+                  <h4 class="card-title">{{ speaker.name }}</h4>
+                  <h6 class="card-subtitle text-muted mb-2">{{ speaker.email }}</h6>
+                  <!-- {# TODO based on registration status show a badge here #} -->
+                  {% if speaker.id %}
+                    <a class="card-link text-danger" href="/app/meetups/{{ meetup_id }}/events/{{ event_id }}/speakers/{{ speaker.id }}/delete/">Remove</a>
+                  {% else %}
+                    <a class="card-link text-danger" href="/app/meetups/{{ meetup_id }}/events/{{ event_id }}/speakers/{{ speaker.email }}/delete/">Remove</a>
+                  {% endif %}
                 </div>
               </div>
-              {# {% endfor %} #}
+              {% endfor %}
 
             </div>
           </div>

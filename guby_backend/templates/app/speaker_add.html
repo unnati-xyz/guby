@@ -47,9 +47,9 @@
               <h1 class="card-title">Add Speaker</h1>
 
 
-              {# TODO {% load crispy_forms_tags %} #}
-              <form class="form-signin" action="TODO" method="POST">
-                  {# TODO {% csrf_token %} #}
+              {% load crispy_forms_tags %}
+              <form class="form-signin" action="/app/meetups/{{ meetup_id }}/events/{{ event_id }}/speakers/add/" method="POST">
+                  {% csrf_token %}
                   <div class="form-group">
                       <label for="speaker-email">Email</label>
                       <input type="text" id="speaker-email" class="form-control" required name="speaker-email" />

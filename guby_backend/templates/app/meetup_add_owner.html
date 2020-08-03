@@ -53,7 +53,7 @@
               <form class="form-signin" action="/app/meetups/{{ meetup_id }}/owner/add" method="POST">
                   {% csrf_token %}
                   <div class="form-group">
-                      <label for="meetup-userid">Username</label>
+                      <label for="meetup-userid">Email</label>
                       <input type="text" id="inputMeetupOwner" class="form-control" required name="meetup-userid" />
                       <small class="form-text text-muted">Note: This user might already be signed up to guby.live</small>
                   </div>

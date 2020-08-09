@@ -40,6 +40,7 @@ def get_rolename(request, id):
 
 @login_required()
 def meetup_index(request):
+    logger.info("request meetup index")
     meetup_ids = get_own_meetup_ids(request.user)
     # get all meetups where user is owner, not just creator
     meetups = Meetup.objects.filter(pk__in=meetup_ids)

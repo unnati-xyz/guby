@@ -1,7 +1,11 @@
+import logging
+
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
 from . import views
+
+logger = logging.getLogger(__name__)
 
 urlpatterns = [
     path('users/', include('django.contrib.auth.urls')),

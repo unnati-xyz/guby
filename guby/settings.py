@@ -149,7 +149,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/code/guby-web.log',
+            'filename': '/tmp/guby-web.log',
             'formatter': 'verbose'
         },
     },

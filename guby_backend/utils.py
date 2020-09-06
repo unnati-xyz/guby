@@ -1,6 +1,9 @@
+import logging
 from functools import wraps
 from django.http import HttpResponseForbidden
 from django.contrib.auth import get_user_model
+
+logger = logging.getLogger(__name__)
 
 def has_ownership(func):
     

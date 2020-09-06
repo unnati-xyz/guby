@@ -40,7 +40,7 @@ def get_rolename(request, id):
 
 @login_required()
 def meetup_index(request):
-    logger.info("request meetup index")
+    logger.info(f"request meetup index for user {request.user}")
     meetup_ids = get_own_meetup_ids(request.user)
     # get all meetups where user is owner, not just creator
     meetups = Meetup.objects.filter(pk__in=meetup_ids)
@@ -49,6 +49,7 @@ def meetup_index(request):
 
 @login_required()
 def meetup_add(request):
+    logger.info(f"{request.method} request meetup add by user {request.user}")
      form = MeetupForm(request.POST or None)  
      if form.is_valid():  
         meetup = form.save(commit=False)  
@@ -65,6 +66,7 @@ def meetup_add(request):
 @login_required()
 @has_ownership
 def meetup_edit(request, meetup_id):
+    logger.info(f"{request.method} request meetup edit by user {request.user} meetup id {meetup_id}")
     meetup = get_object_or_404(Meetup, pk=meetup_id)
 
     form = MeetupForm(request.POST or None, instance = meetup)
@@ -78,6 +80,7 @@ def meetup_edit(request, meetup_id):
 @login_required()
 @has_ownership
 def meetup_delete(request, meetup_id):
+    logger.info(f"{request.method} request meetup delete by user {request.user} meetup id {meetup_id}")
     meetup = get_object_or_404(Meetup, pk=meetup_id)
     form = MeetupDeleteForm(instance=meetup)
 
@@ -90,6 +93,7 @@ def meetup_delete(request, meetup_id):
 @login_required()
 @has_ownership
 def meetup_owner_index(request, meetup_id):
+    logger.info(f"{request.method} request meetup owner index by user {request.user} meetup id {meetup_id}")
    
     if request.method == 'GET':
         meetup = get_object_or_404(Meetup, pk=meetup_id)
@@ -102,6 +106,7 @@ def meetup_owner_index(request, meetup_id):
 @login_required()
 @has_ownership
 def meetup_owner_add(request, meetup_id):
+    logger.info(f"{request.method} request meetup owner add by user {request.user} meetup id {meetup_id}")
    
     if request.method == 'GET':
         return render(request, 'app/meetup_add_owner.html', {'meetup_id': meetup_id})
@@ -118,6 +123,7 @@ def meetup_owner_add(request, meetup_id):
 @login_required()
 @has_ownership
 def meetup_owner_delete(request, meetup_id, user_id):
+    logger.info(f"{request.method} request meetup owner delete by user {request.user} meetup id {meetup_id}")
    
     if request.method == 'GET':
         owner = User.objects.get(id=user_id)
@@ -129,7 +135,8 @@ def meetup_owner_delete(request, meetup_id, user_id):
 @login_required()
 @has_ownership
 def event_index(request, meetup_id):
-    # check if login user is owner of meetupid
+    logger.info(f"{request.method} request event index by user {request.user} meetup id {meetup_id}")
+
     meetup = Meetup.objects.get(id=meetup_id)
     events = Event.objects.filter(meetup=meetup_id)
     return render(request, 'app/events.html', {'meetup': meetup, 'events': events})
@@ -137,6 +144,8 @@ def event_index(request, meetup_id):
 @login_required()
 @has_ownership
 def event_add(request, meetup_id):
+    logger.info(f"{request.method} request event add by user {request.user} meetup id {meetup_id}")
+
     form = EventForm(request.POST or None)
     if form.is_valid():
         meetup = Meetup.objects.get(id=meetup_id)
@@ -154,6 +163,8 @@ def event_add(request, meetup_id):
 @login_required()
 @has_ownership
 def event_edit(request, meetup_id, event_id):
+    logger.info(f"{request.method} request event edit by user {request.user} meetup id {meetup_id} event {event_id}")
+
     event = get_object_or_404(Event, pk=event_id)
     form = EventForm(request.POST or None, instance=event)
 
@@ -166,6 +177,8 @@ def event_edit(request, meetup_id, event_id):
 @login_required()
 @has_ownership
 def event_delete(request, meetup_id, event_id):
+    logger.info(f"{request.method} request event delete by user {request.user} meetup id {meetup_id} event {event_id}")
+
     event = get_object_or_404(Event, pk=event_id)
     form = EventDeleteForm(instance=event)
 
@@ -178,6 +191,8 @@ def event_delete(request, meetup_id, event_id):
 @login_required()
 @has_ownership
 def speaker_add(request, meetup_id, event_id):
+    logger.info(f"{request.method} request speaker add by user {request.user} meetup id {meetup_id} event {event_id}")
+
     event = get_object_or_404(Event, pk=event_id)
 
     if request.method == 'POST':
@@ -199,6 +214,7 @@ def speaker_add(request, meetup_id, event_id):
 @login_required()
 @has_ownership
 def speaker_index(request, meetup_id, event_id):
+    logger.info(f"{request.method} request speaker index by user {request.user} meetup id {meetup_id} event {event_id}")
    
     if request.method == 'GET':
         event = get_object_or_404(Event, pk=event_id)
@@ -215,6 +231,7 @@ def speaker_index(request, meetup_id, event_id):
 @login_required()
 @has_ownership
 def speaker_delete(request, meetup_id, event_id, user_id):
+    logger.info(f"{request.method} request speaker delete active by user {request.user} meetup id {meetup_id} event {event_id}")
    
     if request.method == 'GET':
         speaker = User.objects.get(id=user_id)
@@ -226,6 +243,7 @@ def speaker_delete(request, meetup_id, event_id, user_id):
 @login_required()
 @has_ownership
 def speaker_delete_inactive(request, meetup_id, event_id, email):
+    logger.info(f"{request.method} request speaker delete inactive by user {request.user} meetup id {meetup_id} event {event_id} email {email}")
    
     if request.method == 'GET':
         event = get_object_or_404(Event, pk=event_id)

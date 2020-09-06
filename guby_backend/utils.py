@@ -17,6 +17,7 @@ def has_ownership(func):
     return check_owner_wrapper
 
 def get_own_meetup_ids(user):
+    logger.info(f"get own meetups for user {user}")
     # get group names where the user is owner
     group_names = user.groups.all()
 
@@ -30,6 +31,7 @@ def get_own_meetup_ids(user):
 
 
 def create_inactive_user(email):
+    logger.info(f"create inactive user {email}")
     User = get_user_model()
     new_user = User(email=email, name=email, is_active=False)
     new_user.save()

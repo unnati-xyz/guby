@@ -1,6 +1,9 @@
+import logging
 from functools import wraps
 from django.http import HttpResponseForbidden
 from django.contrib.auth import get_user_model
+
+logger = logging.getLogger(__name__)
 
 def has_ownership(func):
     
@@ -17,6 +20,7 @@ def has_ownership(func):
     return check_owner_wrapper
 
 def get_own_meetup_ids(user):
+    logger.info(f"get own meetups for user {user}")
     # get group names where the user is owner
     group_names = user.groups.all()
 
@@ -30,6 +34,7 @@ def get_own_meetup_ids(user):
 
 
 def create_inactive_user(email):
+    logger.info(f"create inactive user {email}")
     User = get_user_model()
     new_user = User(email=email, name=email, is_active=False)
     new_user.save()

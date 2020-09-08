@@ -138,3 +138,49 @@ LOGIN_URL = '/app/users/login/'
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'when': 'D',
+            'backupCount': 0,
+            'utc':'True',
+            'filename': '/tmp/guby-web.log',
+            'formatter': 'verbose'
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {name} {module} pid-{process:d} {message}',
+            # 'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+            'style': '{',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
+        'django.request': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'guby_backend': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

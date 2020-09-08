@@ -148,9 +148,10 @@ LOGGING = {
         },
         'file': {
             'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'maxBytes': 15728640,  # 1024 * 1024 * 15B = 15MB
-            'backupCount': 10,
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'when': 'D',
+            'backupCount': 0,
+            'utc':'True',
             'filename': '/tmp/guby-web.log',
             'formatter': 'verbose'
         },
